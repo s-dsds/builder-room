@@ -3,12 +3,18 @@ var currMod = "0";
 
 function loadMod(mod) {
     console.log("loading mod "+mod.name);
-    window.WLROOM.loadMod(makeModZip(mod.data, base_sprites));
+    if (typeof mod.zip != "undefined") {
+        mod.zip= makeModZip(mod.data, base_sprites);
+    }
+    window.WLROOM.loadMod(mod.zip);
 }
 
 function makeModZip(basemod, sprites) {
     console.log("building zip");
     var mdzip = new JSZip();
+    if (basemod.soundpack!= "undefined") {
+        basemod = JSON.stringify(basemod);
+    }
     mdzip.file('mod.json5',basemod);
 
     mdzip.file('sprites.wlsprt', sprites, {binary:true});
