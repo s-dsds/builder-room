@@ -1,5 +1,5 @@
 addMod("build",{data:`{
-  soundpack: 'promode.zip',
+  soundpack: "promode.zip",
   constants: {
     nrInitialLength: 250,
     nrAttachLength: 28.125,
@@ -39,7 +39,7 @@ addMod("build",{data:`{
     fallDamageDown: 0,
     fallDamageUp: 0,
     hFallDamage: false,
-    hBonusReloadOnly: true,
+    hBonusReloadOnly: true
   },
   weapons: [
     {
@@ -59,7 +59,7 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'SQUARE',
+      name: "SQUARE"
     },
     {
       parts: 1,
@@ -78,9 +78,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'RUBBER ERASER',
+      name: "RUBBER ERASER"
     },
-    {
+	 {
       parts: 1,
       bulletType: 44,
       bulletSpeed: 1,
@@ -97,9 +97,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'BLUE BRICK',
+      name: "BLUE BRICK"
     },
-    {
+	{
       parts: 1,
       bulletType: 45,
       bulletSpeed: 1,
@@ -116,9 +116,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'GREEN BRICK',
+      name: "GREEN BRICK"
     },
-    {
+	{
       parts: 1,
       bulletType: 46,
       bulletSpeed: 1,
@@ -135,9 +135,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'GREY BRICK',
+      name: "GREY BRICK"
     },
-    {
+	{
       parts: 1,
       bulletType: 47,
       bulletSpeed: 1,
@@ -154,9 +154,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'RED BRICK',
+      name: "RED BRICK"
     },
-    {
+	{
       parts: 1,
       bulletType: 48,
       bulletSpeed: 1,
@@ -173,9 +173,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'BOULDER',
+      name: "BOULDER"
     },
-    {
+	{
       parts: 1,
       bulletType: 49,
       bulletSpeed: 1,
@@ -192,9 +192,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'TETRIS LEFT',
+      name: "TETRIS LEFT"
     },
-    {
+	{
       parts: 1,
       bulletType: 50,
       bulletSpeed: 1,
@@ -211,9 +211,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'TETRIS RIGHT',
+      name: "TETRIS RIGHT"
     },
-    {
+	{
       parts: 1,
       bulletType: 51,
       bulletSpeed: 1,
@@ -230,9 +230,9 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'TETRIS VERTICAL',
+      name: "TETRIS VERTICAL"
     },
-    {
+	{
       parts: 1,
       bulletType: 52,
       bulletSpeed: 1,
@@ -249,16 +249,16 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'TETRIS HORIZONTAL',
+      name: "TETRIS HORIZONTAL"
     },
-    {
+	{
       parts: 1,
       bulletType: 53,
       bulletSpeed: 5,
       bulletSpeedInherit: 0.666,
       distribution: 6.666,
       recoil: 0.03,
-      ammo: 140,
+      ammo: 140,     
       delay: 0,
       loadingTime: 0,
       leaveShells: 0,
@@ -268,7 +268,7 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: -1,
       playReloadSound: false,
-      name: 'FLAMING ERASER',
+      name: "FLAMING ERASER"
     },
     {
       parts: 1,
@@ -287,11 +287,11 @@ addMod("build",{data:`{
       laserBeam: false,
       launchSound: 18,
       playReloadSound: false,
-      name: 'SUICIDE',
+      name: "SUICIDE"
     },
   ],
   wObjects: [
-    {
+  { // auto shotgun wid0
       detectDistance: 1,
       blowAway: 0.01,
       gravity: 0.005068115234375,
@@ -327,9 +327,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 435,
+      speed: 435
     },
-    {
+    { // chaingun wid1
       detectDistance: 1,
       blowAway: 0.05,
       gravity: 0.0042724609375,
@@ -365,9 +365,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 490,
+      speed: 490
     },
-    {
+    { // rifle wid2
       detectDistance: 1,
       blowAway: 0.6,
       gravity: 0.00030517578125,
@@ -403,9 +403,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 0,
+      speed: 0
     },
-    {
+    { // bazooka wid3
       detectDistance: 2,
       blowAway: 0,
       gravity: 0,
@@ -441,9 +441,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 0,
+      speed: 0
     },
-    {
+    { // lightning gun wid4
       detectDistance: 1,
       blowAway: 0.12,
       gravity: 0,
@@ -479,9 +479,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // solar scorch wid5
       detectDistance: 0,
       blowAway: 0,
       gravity: 0,
@@ -517,9 +517,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 500,
+      speed: 500
     },
-    {
+    { // mine wid6 (unused)
       detectDistance: 2,
       blowAway: 0.6,
       gravity: 0.0152587890625,
@@ -555,9 +555,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 95,
+      speed: 95
     },
-    {
+    { // winchester wid7
       detectDistance: 1,
       blowAway: 0.7,
       gravity: 0.00030517578125,
@@ -593,9 +593,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 250,
+      speed: 250
     },
-    {
+    { // doomsday wid8
       detectDistance: 1,
       blowAway: 0.15,
       gravity: 0,
@@ -631,9 +631,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 210,
+      speed: 210
     },
-    {
+    { // flamethrower wid9
       detectDistance: 2,
       blowAway: 0,
       gravity: -0.003814697265625,
@@ -669,9 +669,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 165,
+      speed: 165
     },
-    {
+    { // grnlauncher wid10
       detectDistance: 1,
       blowAway: 0.3,
       gravity: 0.01983642578125,
@@ -707,9 +707,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // larpa wid11 (unused)
       detectDistance: 1,
       blowAway: 0.4,
       gravity: 0.0030517578125,
@@ -745,9 +745,9 @@ addMod("build",{data:`{
       partTrailType: 1,
       partTrailObj: 5,
       partTrailDelay: 4,
-      speed: 220,
+      speed: 220
     },
-    {
+    { // proxymine wid12
       detectDistance: 8,
       blowAway: 0.22,
       gravity: 0,
@@ -783,9 +783,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 200,
+      speed: 200
     },
-    {
+    { // mortar wid13
       detectDistance: 3,
       blowAway: 0.1,
       gravity: 0.00091552734375,
@@ -821,9 +821,9 @@ addMod("build",{data:`{
       partTrailType: 1,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 45,
+      speed: 45
     },
-    {
+    { // minigun wid14
       detectDistance: 0,
       blowAway: 0.05,
       gravity: 0.00762939453125,
@@ -859,9 +859,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 355,
+      speed: 355
     },
-    {
+    { // clusterpod wid15
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.01983642578125,
@@ -897,9 +897,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 140,
+      speed: 140
     },
-    {
+    { // supershotgun wid16
       detectDistance: 1,
       blowAway: 0.015,
       gravity: 0.005,
@@ -935,9 +935,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 320,
+      speed: 320
     },
-    {
+    { // throwknife wid17
       detectDistance: 2,
       blowAway: 0.1,
       gravity: 0.02288818359375,
@@ -973,9 +973,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 350,
+      speed: 350
     },
-    {
+    { // chiquitagun wid18
       detectDistance: 0,
       blowAway: 0.15,
       gravity: 0.000152587890625,
@@ -1011,9 +1011,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // eternal flame wid19
       detectDistance: 1,
       blowAway: 0,
       gravity: 0.3,
@@ -1049,9 +1049,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: 29,
       partTrailDelay: 1,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // incendiator wid20
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.01,
@@ -1087,9 +1087,9 @@ addMod("build",{data:`{
       partTrailType: 1,
       partTrailObj: 12,
       partTrailDelay: 3,
-      speed: 500,
+      speed: 500
     },
-    {
+    { // zimm wid21
       detectDistance: 1,
       blowAway: 0,
       gravity: 0,
@@ -1125,9 +1125,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // mininuke wid22
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.0152587890625,
@@ -1163,9 +1163,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // unused wid23
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.0152587890625,
@@ -1201,9 +1201,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // unused wid24
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.0152587890625,
@@ -1239,9 +1239,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // hovercrack wid25
       detectDistance: 0,
       blowAway: 0,
       gravity: 0,
@@ -1277,9 +1277,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: 24,
       partTrailDelay: 1,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // flak wid26
       detectDistance: 2,
       blowAway: 0.2,
       gravity: 0.0030517578125,
@@ -1315,9 +1315,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 510,
+      speed: 510
     },
-    {
+    { // bouncylarpa wid27
       detectDistance: 1,
       blowAway: 0.4,
       gravity: 0.0030517578125,
@@ -1353,9 +1353,9 @@ addMod("build",{data:`{
       partTrailType: 1,
       partTrailObj: 3,
       partTrailDelay: 4,
-      speed: 220,
+      speed: 220
     },
-    {
+    { // laser wid28
       detectDistance: 0,
       blowAway: 0,
       gravity: 0,
@@ -1391,9 +1391,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 100,
+      speed: 100
     },
-    {
+    { // spikeballs wid29
       detectDistance: 2,
       blowAway: 0.2,
       gravity: 0.0152587890625,
@@ -1429,9 +1429,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 110,
+      speed: 110
     },
-    {
+    { // unused wid30
       detectDistance: 2,
       blowAway: 0,
       gravity: 0.0152587890625,
@@ -1467,9 +1467,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 188,
+      speed: 188
     },
-    {
+    { // tupolev wid31
       detectDistance: 1,
       blowAway: 0.22,
       gravity: 0,
@@ -1505,9 +1505,9 @@ addMod("build",{data:`{
       partTrailType: 1,
       partTrailObj: 10,
       partTrailDelay: 10,
-      speed: 200,
+      speed: 200
     },
-    {
+    { // lava missile wid32
       detectDistance: 1,
       blowAway: 0,
       gravity: 0,
@@ -1543,9 +1543,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 230,
+      speed: 230
     },
-    {
+    { // chiquitabomb wid33
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.01983642578125,
@@ -1581,9 +1581,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 170,
+      speed: 170
     },
-    {
+    { // boobytrap wid34
       detectDistance: 3,
       blowAway: 0,
       gravity: 0.02288818359375,
@@ -1619,9 +1619,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 100,
+      speed: 100
     },
-    {
+    { //unused wid35
       detectDistance: 1,
       blowAway: 0,
       gravity: 0.01678466796875,
@@ -1657,9 +1657,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 190,
+      speed: 190
     },
-    {
+    { // unused wid36
       detectDistance: 1,
       blowAway: 0.1,
       gravity: 0,
@@ -1695,12 +1695,12 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 230,
+      speed: 230
     },
-    {
+    { // dartgun wid37
       detectDistance: 1,
       blowAway: 0.3,
-      gravity: 0,
+      gravity: 0.0,
       exploSound: -1,
       addSpeed: 0,
       distribution: 0.02288818359375,
@@ -1733,9 +1733,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 350,
+      speed: 350
     },
-    {
+    { // scattergun wid38
       detectDistance: 0,
       blowAway: 0.05,
       gravity: 0.01068115234375,
@@ -1771,9 +1771,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 315,
+      speed: 315
     },
-    {
+    { // gaussgun wid39
       detectDistance: 1,
       blowAway: 0.2,
       gravity: 0,
@@ -1809,9 +1809,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 200,
+      speed: 200
     },
-    {
+    { // dynamite wid40
       detectDistance: 0,
       blowAway: 0,
       gravity: 0.01983642578125,
@@ -1847,9 +1847,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 300,
+      speed: 300
     },
-    {
+    { // acid fan wid41
       detectDistance: 1,
       blowAway: 0.3,
       gravity: 0,
@@ -1885,9 +1885,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid42
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -1923,9 +1923,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // rubber wid43
       detectDistance: 0,
       blowAway: 0,
       gravity: 0,
@@ -1946,7 +1946,7 @@ addMod("build",{data:`{
       timeToExploV: 0,
       hitDamage: 0,
       bloodOnHit: 20,
-      startFrame: 73,
+      startFrame: 73,  // in fact u can use also -1 or 0 index here, the "main" cleaning spirte is used in nobject
       numFrames: 0,
       loopAnim: false,
       shotType: 0,
@@ -1961,9 +1961,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid44
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -1999,9 +1999,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid45
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2037,9 +2037,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid46
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2075,9 +2075,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid47
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2113,9 +2113,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid48
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2151,9 +2151,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid49
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2189,9 +2189,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid50
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2227,9 +2227,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid51
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2265,9 +2265,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // test wid52
       detectDistance: 30,
       blowAway: 0,
       gravity: 1,
@@ -2303,9 +2303,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+	{ // rubber wid53
       detectDistance: 1,
       blowAway: 0.666,
       gravity: 0,
@@ -2341,9 +2341,9 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 180,
+      speed: 180
     },
-    {
+    { // suicide wid54
       detectDistance: -4,
       blowAway: 0,
       gravity: 0,
@@ -2379,11 +2379,11 @@ addMod("build",{data:`{
       partTrailType: 0,
       partTrailObj: -1,
       partTrailDelay: 0,
-      speed: 0,
+      speed: 0
     },
   ],
   nObjects: [
-    {
+    { // worm part nid0
       detectDistance: 0,
       gravity: 0.0152587890625,
       speed: 1.2,
@@ -2411,9 +2411,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 8000,
-      timeToExploV: 2000,
+      timeToExploV: 2000
     },
-    {
+    { // worm part nid1
       detectDistance: 0,
       gravity: 0.0152587890625,
       speed: 1.2,
@@ -2441,9 +2441,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 8000,
-      timeToExploV: 2000,
+      timeToExploV: 2000
     },
-    {
+    { // non-damaging bullet splinter nid2
       detectDistance: 0,
       gravity: 0.01068115234375,
       speed: 2,
@@ -2471,9 +2471,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 30,
-      timeToExploV: 15,
+      timeToExploV: 15
     },
-    {
+    { // small damage bullet splinter nid3
       detectDistance: 0,
       gravity: 0.01068115234375,
       speed: 1.6,
@@ -2501,9 +2501,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // mortar splinter final nid4
       detectDistance: 1,
       gravity: 0.01068115234375,
       speed: 4,
@@ -2531,9 +2531,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 16,
-      timeToExploV: 12,
+      timeToExploV: 12
     },
-    {
+    { // high damage bullet splinter nid5
       detectDistance: 1,
       gravity: 0.01068115234375,
       speed: 4,
@@ -2561,9 +2561,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 18,
-      timeToExploV: 5,
+      timeToExploV: 5
     },
-    {
+    { // nid6
       detectDistance: 0,
       gravity: 0.01068115234375,
       speed: 0.75,
@@ -2591,9 +2591,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // shell nid7
       detectDistance: 0,
       gravity: 0.0152587890625,
       speed: 0,
@@ -2621,9 +2621,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 4000,
-      timeToExploV: 1000,
+      timeToExploV: 1000
     },
-    {
+    { // clusterpart nid8
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 2.2,
@@ -2651,9 +2651,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // tupolev bomb nid9
       detectDistance: 0,
       gravity: 0.0152587890625,
       speed: 2,
@@ -2681,9 +2681,9 @@ addMod("build",{data:`{
       leaveObj: 5,
       leaveObjDelay: 5,
       timeToExplo: 200,
-      timeToExploV: 50,
+      timeToExploV: 50
     },
-    {
+    { // tupolev bomb nid10
       detectDistance: 1,
       gravity: 0.030517578125,
       speed: 1.8,
@@ -2711,9 +2711,9 @@ addMod("build",{data:`{
       leaveObj: 3,
       leaveObjDelay: 8,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // mininuke part nid11
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 2,
@@ -2741,9 +2741,9 @@ addMod("build",{data:`{
       leaveObj: 5,
       leaveObjDelay: 5,
       timeToExplo: 80,
-      timeToExploV: 20,
+      timeToExploV: 20
     },
-    {
+    { // napalm trail nid12
       detectDistance: 0,
       gravity: 0.0152587890625,
       speed: 1.5,
@@ -2771,9 +2771,9 @@ addMod("build",{data:`{
       leaveObj: 8,
       leaveObjDelay: 4,
       timeToExplo: 40,
-      timeToExploV: 10,
+      timeToExploV: 10
     },
-    {
+    { // nid13
       detectDistance: 0,
       gravity: 0,
       speed: 4,
@@ -2801,9 +2801,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // banana nid14
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 2.2,
@@ -2831,9 +2831,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // new bazooka explosion nid15
       detectDistance: 0,
       gravity: 0,
       speed: 3,
@@ -2861,9 +2861,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 5,
-      timeToExploV: 5,
+      timeToExploV: 5
     },
-    {
+    { // new bazooka smoke nid16
       detectDistance: 1,
       gravity: -0.05,
       speed: 0,
@@ -2891,9 +2891,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 30,
-      timeToExploV: 15,
+      timeToExploV: 15
     },
-    {
+    { // smoke delay nid17
       detectDistance: 0,
       gravity: 0,
       speed: 0,
@@ -2921,9 +2921,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 20,
-      timeToExploV: 10,
+      timeToExploV: 10
     },
-    {
+    { // light banana nid18
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 2.2,
@@ -2951,9 +2951,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 0,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // mortar splinter #1 nid19
       detectDistance: 0,
       gravity: 0.01068115234375,
       speed: 4,
@@ -2981,9 +2981,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 15,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // mortar splinter #2 nid20
       detectDistance: 0,
       gravity: 0.01068115234375,
       speed: 1,
@@ -3011,9 +3011,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 5,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // mortar splinter delayer nid21
       detectDistance: 0,
       gravity: 0,
       speed: 1,
@@ -3041,9 +3041,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 5,
-      timeToExploV: 2,
+      timeToExploV: 2
     },
-    {
+    { // nid22
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 1.2,
@@ -3071,9 +3071,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 70,
-      timeToExploV: 60,
+      timeToExploV: 60
     },
-    {
+    { // nid23
       detectDistance: 1,
       gravity: 0.0152587890625,
       speed: 1.2,
@@ -3101,9 +3101,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 70,
-      timeToExploV: 60,
+      timeToExploV: 60
     },
-    {
+    { // crackfield particle + marker nid24
       detectDistance: 0,
       gravity: 0,
       speed: 5,
@@ -3131,9 +3131,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 7,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // new missile explosion nid25
       detectDistance: 0,
       gravity: 0,
       speed: 3,
@@ -3161,9 +3161,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 2,
-      timeToExploV: 2,
+      timeToExploV: 2
     },
-    {
+    { // flamer hot smoke nid26
       detectDistance: 1,
       gravity: -0.05,
       speed: 0,
@@ -3191,9 +3191,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 15,
-      timeToExploV: 10,
+      timeToExploV: 10
     },
-    {
+    { // grenade explosion nid27
       detectDistance: 0,
       gravity: 0,
       speed: 3,
@@ -3221,9 +3221,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 5,
-      timeToExploV: 4,
+      timeToExploV: 4
     },
-    {
+	{ // rock nid28
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3251,9 +3251,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // rubber nid29
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3281,9 +3281,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid30
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3311,9 +3311,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid31
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3341,9 +3341,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid32
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3371,9 +3371,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid33
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3401,9 +3401,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid34
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3431,9 +3431,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid35
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3461,9 +3461,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid36
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3491,9 +3491,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid37
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3521,9 +3521,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+	{ // rock nid38
       detectDistance: 10,
       gravity: 0,
       speed: 0,
@@ -3551,9 +3551,9 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
-    {
+    { // rubber nid39
       detectDistance: 10,
       gravity: 0,
       speed: 3,
@@ -3581,11 +3581,11 @@ addMod("build",{data:`{
       leaveObj: -1,
       leaveObjDelay: 0,
       timeToExplo: 1,
-      timeToExploV: 0,
+      timeToExploV: 0
     },
   ],
   sObjects: [
-    {
+    { // large explosion sid0
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3597,9 +3597,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
+    { // medium explosion sid1
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3611,9 +3611,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 2,
       flash: 4,
-      dirtEffect: 1,
+      dirtEffect: 1
     },
-    {
+    { // small explosion sid2
       startSound: 7,
       numSounds: 2,
       animDelay: 2,
@@ -3625,9 +3625,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 1,
       flash: 0,
-      dirtEffect: 2,
+      dirtEffect: 2
     },
-    {
+    { // smoke sid3
       startSound: -1,
       numSounds: 0,
       animDelay: 4,
@@ -3639,9 +3639,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // zimm explosion sid4
       startSound: -1,
       numSounds: 0,
       animDelay: 4,
@@ -3653,9 +3653,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: 5,
+      dirtEffect: 5
     },
-    {
+    { // sid5
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3667,9 +3667,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // minicocket trail sid6
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3681,9 +3681,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // sid7
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3695,9 +3695,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // sid8
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3709,9 +3709,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: 2,
+      dirtEffect: 2
     },
-    {
+    { // sid9
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3723,9 +3723,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: 5,
+      dirtEffect: 5
     },
-    {
+    { // sid10
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3737,9 +3737,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 2,
       flash: 3,
-      dirtEffect: 8,
+      dirtEffect: 8
     },
-    {
+    { // sid11
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3751,9 +3751,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 3,
       flash: 6,
-      dirtEffect: 1,
+      dirtEffect: 1
     },
-    {
+    { // sid12
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3765,9 +3765,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 3,
       flash: 5,
-      dirtEffect: 1,
+      dirtEffect: 1
     },
-    {
+    { // sid13
       startSound: -1,
       numSounds: 0,
       animDelay: 0,
@@ -3779,9 +3779,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // large explosion visual sid14
       startSound: -1,
       numSounds: 0,
       animDelay: 2,
@@ -3793,9 +3793,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // smoke sid15
       startSound: -1,
       numSounds: 0,
       animDelay: 4,
@@ -3807,9 +3807,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // large aoe explosion sid16
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3821,9 +3821,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
+    { // gauss explosion sid17
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3835,9 +3835,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 2,
       flash: 4,
-      dirtEffect: 1,
+      dirtEffect: 1
     },
-    {
+    { // tiny long explosion sid18
       startSound: -1,
       numSounds: 0,
       animDelay: 10,
@@ -3849,9 +3849,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // small smoke sid19
       startSound: -1,
       numSounds: 0,
       animDelay: 3,
@@ -3863,9 +3863,9 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // very large aoe explosion sid20
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3877,9 +3877,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
+    { // lightning trail sid21
       startSound: -1,
       numSounds: 0,
       animDelay: 1,
@@ -3891,9 +3891,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
-    {
+    { // mortar kick sid22
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3905,9 +3905,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
+    { // proxy mine aoe explosion sid23
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3919,9 +3919,9 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
+    { // large non-aoe explosion sid24
       startSound: 9,
       numSounds: 4,
       animDelay: 2,
@@ -3933,23 +3933,23 @@ addMod("build",{data:`{
       shadow: true,
       shake: 4,
       flash: 8,
-      dirtEffect: 0,
+      dirtEffect: 0
     },
-    {
-      startSound: -1,
-      numSounds: 0,
-      animDelay: 3,
-      startFrame: 64,
-      numFrames: 1,
-      detectRange: 0,
-      damage: 0,
-      blowAway: 0,
-      shadow: false,
-      shake: 0,
-      flash: 0,
-      dirtEffect: 2,
-    },
-    {
+    { //test sid25
+        startSound: -1,
+        numSounds: 0,
+        animDelay: 3,
+        startFrame: 64,
+        numFrames: 1,
+        detectRange: 0,
+        damage: 0,
+        blowAway: 0,
+        shadow: false,
+        shake: 0,
+        flash: 0,
+        dirtEffect: 2
+      },
+      { // suicide sid26
       startSound: -1,
       numSounds: 0,
       animDelay: 1,
@@ -3961,7 +3961,7 @@ addMod("build",{data:`{
       shadow: false,
       shake: 0,
       flash: 0,
-      dirtEffect: -1,
+      dirtEffect: -1
     },
   ],
   textures: [
@@ -3969,60 +3969,60 @@ addMod("build",{data:`{
       nDrawBack: true,
       mFrame: 0,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 1,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 2,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 37,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: false,
       mFrame: 0,
       sFrame: 87,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 39,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: false,
       mFrame: 38,
       sFrame: 82,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 99,
       sFrame: 73,
-      rFrame: 2,
+      rFrame: 2
     },
     {
       nDrawBack: true,
       mFrame: 37,
       sFrame: 73,
-      rFrame: 2,
-    },
+      rFrame: 2
+    }
   ],
   colorAnim: [
-    187,
+     187
   ],
   textSpritesStartIdx: 240,
-  crossHairSprite: 153,
+  crossHairSprite: 153
 }`,name:"liero builder", version: "0.0.1",author:"dsds+kangur"});
