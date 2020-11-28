@@ -74,7 +74,7 @@ var COMMAND_REGISTRY = (function () {
         const command = commandList.get(commandText[0])
         if (command == null || typeof command.f != 'function') {
             console.log(`Unrecognized command: ${commandText[0]}`, p.name)
-            return false
+            return true
         } else {
             try {
                 return command.f(p, ...commandText.splice(1))
