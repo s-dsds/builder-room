@@ -63,17 +63,16 @@ function setBuildMod() {
 	sett.timeLimit = 0;
 	sett.scoreLimit = 0;
 	window.WLROOM.setSettings(sett);
-	window.WLROOM.restartGame();
 	currState=BUILDING_STATE;
+	window.WLROOM.restartGame();
 }
 
 function setFight() {
 	loadMod(getCurrentMod());
-	currState=BUILDING_STATE;
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 10;
 	sett.scoreLimit = 15;
 	window.WLROOM.setSettings(sett);
-	window.WLROOM.restartGame();
 	currState=GAME_RUNNING_STATE;
+	window.WLROOM.restartGame();
 }

@@ -58,7 +58,10 @@ function addNewMod(childSnapshot) {
 	var k = childSnapshot.key;
 
   addMod(k,v);
-  currMod = k;
+  if (k!="build") {
+    currMod = k;
+  }
+  
   console.log("mod `"+k+"`has been added to memory");
   notifyAdmins("mod `"+k+"`has been added to memory");
 }
