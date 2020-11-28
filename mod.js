@@ -4,7 +4,7 @@ var currMod = "0";
 function loadMod(mod) {
     console.log("loading mod "+mod);
     if (typeof mod.data!=undefined) {
-        mod = mod.data;
+        mod = makeModZip(mod.data);
     }
     window.WLROOM.loadMod(mod);
 }
