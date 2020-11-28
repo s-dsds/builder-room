@@ -29,12 +29,6 @@ function addMod(id, json) {
             json: json.data,
             author: json.author
     });
-    /*
-    mods.set(version+"-splash", {
-        version: version+"-splash",
-        json: stripLeds(json),
-    })
-    */
 }
 
 function getCurrentMod() {

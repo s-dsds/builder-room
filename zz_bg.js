@@ -1,5 +1,4 @@
 initFirebase();
-loadSplash(); 
 
 window.WLROOM.onPlayerJoin = (player) => {
 	if (admins.has(player.auth) ) {
@@ -88,12 +87,12 @@ function setBuild() {
 	sett.timeScoreLimit(0);
 	window.WLROOM.loadSettings(sett);
 	window.WLROOM.restartGame();
-	currState=BUILDING_SATE;
+	currState=BUILDING_STATE;
 }
 
 function setFight() {
 	loadMod(getCurrentMod());
-	currState=BUILDING_SATE;
+	currState=BUILDING_STATE;
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit(10);
 	sett.timeScoreLimit(15);

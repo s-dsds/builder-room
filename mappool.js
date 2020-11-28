@@ -46,17 +46,6 @@ function getRandomMapName() {
 }
 */
 
-function loadRandomMap() {
-    /* const name = getRandomMapName();
-    console.log("undeftest",typeof mypool.get(name).variations !=='undefined');    
-    loadMap(name, (typeof mypool.get(name).variations !=='undefined')?resolveRandomizedVariationName(mypool.get(name)):'');	 */
-    if (isSplash()) {
-      
-        stopSplash();
-        currState = GAME_RUNNING_STATE;
-    }
-    
-}
 /*
 function resolveRandomizedVariationName(map) {
     if (typeof map.variations === 'undefined') {
@@ -74,7 +63,6 @@ function resolveRandomizedVariationName(map) {
 }
 
 function loadMap(name, variation = '') {
-    stopSplash();
     console.log("name "+name, "var "+variation);
     if (mypool.has(name)
      && (variation=='' || (typeof mypool.get(name).variations != 'undefined' && mypool.get(name).variations.has(variation)))) {
@@ -91,57 +79,6 @@ function loadMap(name, variation = '') {
 
 }
 */
-
-var splashAnimId;
-
-function loadSplash() {
-    currState = SPLASH_STATE;
-    var splidx = 0;
-    const animorder = [0];
-    const maxframe = animorder.length-1;
-    var fpsInterval = 1;
-    var then = Date.now();
-    var startTime = then;
-    var now, elapsed;
-    var playedThru = false;
-    
-    console.log('splash animation starts'+startTime);
-
-
-    function draw() {
-        if (!isSplash()) {
-            stopSplash();
-            return;
-        }
-        splashAnimId = requestAnimationFrame(draw);  
-        now = Date.now();
-        elapsed = now - then;
-    
-        // if enough time has elapsed, draw the next frame
-        
-        if (elapsed > fpsInterval) {
-            then = now - (elapsed % fpsInterval);
-            
-            window.WLROOM.loadPNGLevel("splashframe"+splidx, splashAnim[animorder[splidx]]);
-            if (splidx<maxframe) {
-                splidx++;
-                playedThru = false;
-            } else {
-                splidx = 0;
-                playedThru = true;
-            }
-        }
-        
-    }
-
-    //loadPalette('default');
-    draw();
-}
-
-function stopSplash() {
-    console.log('stp');
-    cancelAnimationFrame(splashAnimId);
-}
 
 function _base64ToArrayBuffer(base64) {
     var binary_string = window.atob(base64);
