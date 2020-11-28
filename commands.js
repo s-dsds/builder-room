@@ -13,7 +13,7 @@ var votes = (() => {
         },
         reset: (name) => { this[name] = []; },
         count: (name) => this[name].length,
-        accepted: (name) => this[name].length>=requiredVoteCount(),
+        accepted: (name) => getActivePlayers().length>1 && this[name].length>=requiredVoteCount(),
     }
 })();
 
@@ -24,11 +24,14 @@ COMMAND_REGISTRY.add("clear", ["!clear: reload a clean map / submit to voting if
         announce("cannot clean during a fight", player.id, 0xf02020);
         return false;
     }
+    if (player.team==0) {
+        announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
+    }
     if (getActivePlayers().length>1) {
         votes.add("clear", player);
     }
     if (!votes.accepted("clear")) {
-        announce("player `"+player.name+"`requested cleaning of the playfield, please type !clean to vote if you agree with him", null, 0x0010D0);
+        announce("player `"+player.name+"`requested clearing of the playfield, please type !clear to vote if you agree with him", null, 0x0010D0);
         announce("current required vote count is: `"+requiredVoteCount() + "` current votes: `"+votes.count("clear")+"`", null, 0x0010D0);
         return false;
     }
@@ -46,6 +49,9 @@ COMMAND_REGISTRY.add("fight", ["!fight: starts the fight! / submit to voting if 
     if (isFight()) {
         announce("you're already in a fight", player.id, 0xf02020);
         return false;
+    }
+    if (player.team==0) {
+        announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
     }
     if (getActivePlayers().length>1) {
         votes.add("fight", player);
@@ -70,6 +76,9 @@ COMMAND_REGISTRY.add("build", ["!build: start building the map / submit to votin
         announce("you're already building, if you want to clear the map type !clear", player.id, 0xf02020);
         return false;
     }
+    if (player.team==0) {
+        announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
+    }
     if (getActivePlayers().length>1) {
         votes.add("build", player);
     }
@@ -87,7 +96,7 @@ COMMAND_REGISTRY.add("forcebuild", ["!forcebuild: start building the map"], (pla
     return false;
 }, true);
 
-COMMAND_REGISTRY.add("mod", ["!mod xxx: sets current fighting mod, lists mods if invalid or empty"], (player, modidx)=> {
+COMMAND_REGISTRY.add("mod", ["!mod xxx: sets current fighting mod, lists mods if invalid or empty"], (player, modidx) => {
     if (""==modidx || "building"==modidx || typeof mods.get(modidx) == "undefined") {
         announce("invalid mod", player.id, 0x0010D0);
         announce("avail mods:"+listMods(), player.id, 0x0010D0);

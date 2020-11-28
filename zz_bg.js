@@ -64,6 +64,7 @@ function setBuildMod() {
 	sett.scoreLimit = 0;
 	window.WLROOM.setSettings(sett);
 	currState=BUILDING_STATE;
+	votes.reset("build");
 	window.WLROOM.restartGame();
 }
 
@@ -74,5 +75,6 @@ function setFight() {
 	sett.scoreLimit = 15;
 	window.WLROOM.setSettings(sett);
 	currState=GAME_RUNNING_STATE;
+	votes.reset("fight");
 	window.WLROOM.restartGame();
 }
