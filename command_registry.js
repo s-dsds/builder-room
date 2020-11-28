@@ -74,7 +74,7 @@ var COMMAND_REGISTRY = (function () {
             return false
         } else {
             try {
-                command.f(p, ...commandText.splice(1))
+                return command.f(p, ...commandText.splice(1))
             } catch (e) {
                 console.log(e)
                 room.sendAnnouncement(`Error: ${e.message}`, p.id, 0xFF2222)
