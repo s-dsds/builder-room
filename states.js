@@ -1,7 +1,7 @@
 const GAME_RUNNING_STATE = 1;
 const BUILDING_SATE = 2;
 
-var currState = SPLABUILDING_SATESH_STATE;
+var currState = BUILDING_SATE;
 
 function hasActivePlayers() {
     console.log('act',getActivePlayers().length != 0);
