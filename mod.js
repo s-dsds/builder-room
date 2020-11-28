@@ -13,7 +13,7 @@ function loadMod(mod) {
 function makeModZip(basemod, sprites) {
     console.log("building zip");
     var mdzip = new JSZip();
-    if (typeof basemod.soundpack == "undefined") {        
+    if (typeof basemod.soundpack != "undefined") {        
         basemod = JSON.stringify(basemod);
     }
     console.log(basemod);

@@ -8,7 +8,7 @@ window.WLROOM.onPlayerJoin = (player) => {
 	writeLogins(player);
 	let mod = getCurrentMod();
 	let bmod = mods.get("build");
-	announce("Welcome to the 1v1 room!", player, 0xFF2222, "bold");
+	announce("Welcome to the Liero Builder room!", player, 0xFF2222, "bold");
 	announce("current fighting mod is `"+mod.name+"` version `"+mod.version+"` by `"+mod.author+"`", player, 0xDD2222);
 	announce("current building mod is version `"+bmod.version+"`", player, 0xDD2222);
 
@@ -90,7 +90,7 @@ function setBuildMod() {
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 0;
 	sett.scoreLimit = 0;
-	window.WLROOM.loadSettings(sett);
+	window.WLROOM.setSettings(sett);
 	window.WLROOM.restartGame();
 	currState=BUILDING_STATE;
 }
@@ -101,7 +101,7 @@ function setFight() {
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 10;
 	sett.scoreLimit = 15;
-	window.WLROOM.loadSettings(sett);
+	window.WLROOM.setSettings(sett);
 	window.WLROOM.restartGame();
 	currState=GAME_RUNNING_STATE;
 }
