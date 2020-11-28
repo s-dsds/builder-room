@@ -1,4 +1,4 @@
-addMod("build",{data:`{
+addMod("build",{data:{
     soundpack: "promode.zip",
     constants: {
       nrInitialLength: 250,
@@ -4025,4 +4025,4 @@ addMod("build",{data:`{
     ],
     textSpritesStartIdx: 240,
     crossHairSprite: 153
-  }`,name:"liero builder", version: "0.0.1",author:"dsds+kangur"});
+  },name:"liero builder", version: "0.0.1",author:"dsds+kangur"});
