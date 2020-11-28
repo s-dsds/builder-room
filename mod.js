@@ -36,3 +36,12 @@ function addMod(id, json) {
 function getCurrentMod() {
     return mods.get(currMod);
 }
+
+function listMods() {
+    let mn = [];
+    for (let [key, value] of mods) {
+        if (key=="building") continue;
+        mn.push({key:"`"+value.name+"` v`"+value.version+"`"})
+      }
+    return JSON.stringify(mn)
+}

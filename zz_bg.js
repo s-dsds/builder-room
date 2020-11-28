@@ -1,5 +1,6 @@
 initFirebase();
 setBuildMod();
+cleanMap();
 
 window.WLROOM.onPlayerJoin = (player) => {
 	if (admins.has(player.auth) ) {
