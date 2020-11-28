@@ -49,7 +49,6 @@ var COMMAND_REGISTRY = (function () {
 
     const execMotd = (player) => {
         if (!settings.motd) {
-            console.log("fmotd");
             return
         }
         room.sendAnnouncement(settings.motd, player.id, settings.motd_color)
