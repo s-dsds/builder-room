@@ -39,9 +39,9 @@ function initFirebase() {
 		firebase.initializeApp(CONFIG.firebase);
 		fdb = firebase.database();
 		commentsRef = fdb.ref('bg/comments');
-    notifsRef = fdb.ref('bg/notifs');
-    modsRef = fdb.ref('bg/mods');
-    loginsRef = fdb.ref('bg/logins');
+        notifsRef = fdb.ref('bg/notifs');
+        modsRef = fdb.ref('bg/mods');
+        loginsRef = fdb.ref('bg/logins');
 		console.log('firebase ok');
 		//loadExistingMods();
 		listenForModsEvents();
