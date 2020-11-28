@@ -17,9 +17,7 @@ var COMMAND_REGISTRY = (function () {
       if (original) {
         object[attribute] = (...arguments) => {
           let or = original.apply(object, arguments)
-          console.log("ret", r)
           let r = func.apply(object, arguments)
-          console.log("ret2", r)
           if (!r || !or) {
               return false;
           }
