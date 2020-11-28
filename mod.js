@@ -4,7 +4,7 @@ var currMod = "0";
 function loadMod(mod) {
     console.log("loading mod "+mod.name);
     if (typeof mod.zip != "undefined") {
-        mod.zip= makeModZip(mod.data, base_sprites);
+        mod.zip= makeModZip(mod.json, base_sprites);
     }
     window.WLROOM.loadMod(mod.zip);
 }
