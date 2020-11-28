@@ -13,7 +13,8 @@ window.WLROOM.onPlayerJoin = (player) => {
 	let bmod = mods.get("build");
 	announce("Welcome to the Liero Builder room!", player, 0xFF2222, "bold");
 	announce("current fighting mod is `"+mod.name+"` version `"+mod.version+"` by `"+mod.author+"`", player, 0xDD2222);
-	announce("current building mod is version `"+bmod.version+"`", player, 0xDD2222);
+    announce("current building mod is version `"+bmod.version+"`", player, 0xDD2222);
+    announce("This is currently an early Beta version, so it might break, please tell dsds if you encounter any errors or if you have any comments", player, 0xFF22FF, "italic");
 
 	if (isFight()) {
 		announce("game is running in fighting mod", player, 0xDD2222);
