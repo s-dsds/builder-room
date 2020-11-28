@@ -26,6 +26,7 @@ COMMAND_REGISTRY.add("clear", ["!clear: reload a clean map / submit to voting if
     }
     if (player.team==0) {
         announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
+        return false;
     }
     if (getActivePlayers().length>1) {
         votes.add("clear", player);
@@ -52,6 +53,7 @@ COMMAND_REGISTRY.add("fight", ["!fight: starts the fight! / submit to voting if 
     }
     if (player.team==0) {
         announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
+        return false;
     }
     if (getActivePlayers().length>1) {
         votes.add("fight", player);
@@ -78,6 +80,7 @@ COMMAND_REGISTRY.add("build", ["!build: start building the map / submit to votin
     }
     if (player.team==0) {
         announce("you need to join the game to be allowed to vote", player, 0xFF2020, "bold")
+        return false;
     }
     if (getActivePlayers().length>1) {
         votes.add("build", player);
