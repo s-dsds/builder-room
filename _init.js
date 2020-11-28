@@ -12,7 +12,7 @@ var commands;
 	console.log("Running Server...");
 	var room = WLInit({
 		token: window.WLTOKEN,
-		roomName: "1v1 ᴰᴱᴰ",
+		roomName: "Liero-Builder ᴰᴱᴰ",
 		maxPlayers: 12,	
 		public: CONFIG.public
 	});

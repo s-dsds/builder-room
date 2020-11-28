@@ -8,6 +8,7 @@ window.WLROOM.onPlayerJoin = (player) => {
 	auth.set(player.id, player.auth);
 	writeLogins(player);
 	let mod = getCurrentMod();
+	let bmod = mods.get("build");
 	announce("Welcome to the 1v1 room!", player, 0xFF2222, "bold");
 	announce("current fighting mod is `"+mod.name+"` version `"+mod.version+"` by `"+mod.author+"`", player, 0xDD2222);
 	announce("current building mod is version `"+bmod.version+"`", player, 0xDD2222);
