@@ -1,7 +1,7 @@
 const GAME_RUNNING_STATE = 1;
-const BUILDING_SATE = 2;
+const BUILDING_STATE = 2;
 
-var currState = BUILDING_SATE;
+var currState = BUILDING_STATE;
 
 function hasActivePlayers() {
     console.log('act',getActivePlayers().length != 0);
@@ -13,4 +13,4 @@ function getActivePlayers() {
 }
 
 function isFight() { return currState==GAME_RUNNING_STATE; }
-function isBuild() { return currState==BUILDING_SATE;}
+function isBuild() { return currState==BUILDING_STATE;}
