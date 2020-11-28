@@ -84,8 +84,8 @@ function reload() {
 function setBuild() {
 	loadMod(mods.get("build"));
 	var sett = window.WLROOM.getSettings();
-	sett.timeLimit(0);
-	sett.timeScoreLimit(0);
+	sett.timeLimit = 0;
+	sett.scoreLimit = 0;
 	window.WLROOM.loadSettings(sett);
 	window.WLROOM.restartGame();
 	currState=BUILDING_STATE;
@@ -95,8 +95,8 @@ function setFight() {
 	loadMod(getCurrentMod());
 	currState=BUILDING_STATE;
 	var sett = window.WLROOM.getSettings();
-	sett.timeLimit(10);
-	sett.timeScoreLimit(15);
+	sett.timeLimit = 10;
+	sett.scoreLimit = 15;
 	window.WLROOM.loadSettings(sett);
 	window.WLROOM.restartGame();
 	currState=GAME_RUNNING_STATE;
