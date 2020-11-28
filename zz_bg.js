@@ -1,5 +1,5 @@
 initFirebase();
-setBuild();
+setBuildMod();
 
 window.WLROOM.onPlayerJoin = (player) => {
 	if (admins.has(player.auth) ) {
@@ -30,7 +30,7 @@ window.WLROOM.onPlayerLeave = function(player) {
 	auth.delete(player.id);
 
 	if (!hasActivePlayers()) {
-	   setBuild();
+		setBuildMod();
 	}
 }
 
@@ -44,7 +44,7 @@ window.WLROOM.onPlayerChat = function (p, m) {
 window.WLROOM.onGameEnd = function() {		
     if (!hasActivePlayers()) {
 		console.log("end no active player")
-		setBuild();
+		setBuildMod();
 	}
 }
 
@@ -75,13 +75,13 @@ function moveAllPlayersToSpectator() {
 
 function reload() {
 	if (isBuild()) {
-		setBuild();
+		setBuildMod();
 		return;
 	}
 	setFight()
 }
 
-function setBuild() {
+function setBuildMod() {
 	console.log("set build");
 	loadMod(mods.get("build"));
 	var sett = window.WLROOM.getSettings();
