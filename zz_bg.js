@@ -1,4 +1,5 @@
 initFirebase();
+setBuild();
 
 window.WLROOM.onPlayerJoin = (player) => {
 	if (admins.has(player.auth) ) {
