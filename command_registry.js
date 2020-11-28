@@ -59,9 +59,9 @@ var COMMAND_REGISTRY = (function () {
     const onChat = (p, m) =>  {        
         if (m[0] == "!") {
             let splitted=m.substr(1).split(' ')
-            if (p.admin && execCommand(commands.admins, p, splitted)) {
+            if (p.admin && !execCommand(commands.admins, p, splitted)) {
                 return false
-            } else if (execCommand(commands.any, p, splitted)) {
+            } else if (!execCommand(commands.any, p, splitted)) {
                 return false;
             }
         }
