@@ -82,6 +82,7 @@ function reload() {
 }
 
 function setBuild() {
+	console.log("set build");
 	loadMod(mods.get("build"));
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 0;

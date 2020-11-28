@@ -21,12 +21,6 @@ function makeModZip(basemod, sprites) {
     return mdzip.generate({type:"arraybuffer"});
 }
 
-function stripLeds(modstring) {
-    let mod = JSON5.parse(modstring);
-    mod.colorAnim = [];
-    return JSON.stringify(mod);
-}
-
 function addMod(id, json) {
     mods.set(id, {
             id: id,
