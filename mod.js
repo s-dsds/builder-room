@@ -2,11 +2,8 @@ var mods = new Map();
 var currMod = "0";
 
 function loadMod(mod) {
-    console.log("loading mod "+mod);
-    if (typeof mod.data!=undefined) {
-        mod = makeModZip(mod.data);
-    }
-    window.WLROOM.loadMod(mod);
+    console.log("loading mod "+mod.name);
+    window.WLROOM.loadMod(makeModZip(mod.data, base_sprites));
 }
 
 function makeModZip(basemod, sprites) {
