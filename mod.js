@@ -3,7 +3,7 @@ var currMod = "0";
 
 function loadMod(mod) {
     console.log("loading mod "+mod.name);
-    if (typeof mod.zip != "undefined") {
+    if (typeof mod.zip == "undefined") {
         console.log("make zip");
         mod.zip= makeModZip(mod.json, base_sprites);
     }
@@ -13,7 +13,7 @@ function loadMod(mod) {
 function makeModZip(basemod, sprites) {
     console.log("building zip");
     var mdzip = new JSZip();
-    if (basemod.soundpack!= "undefined") {
+    if (typeof basemod.soundpack == "undefined") {
         basemod = JSON5.stringify(basemod);
     }
     mdzip.file('mod.json5', basemod);

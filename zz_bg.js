@@ -83,7 +83,11 @@ function reload() {
 
 function setBuildMod() {
 	console.log("set build");
-	loadMod(mods.get("build"));
+	let bm = mods.get("build");
+	if (typeof bm.json == "undefined") {
+		console.log("oho");
+	}
+	loadMod(bm);
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 0;
 	sett.scoreLimit = 0;
