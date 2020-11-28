@@ -38,6 +38,6 @@ function _base64ToArrayBuffer(base64) {
 
 function cleanMap() {
     loadMap("heart");
-    this.room.sendAnnouncement("cleaning the playfield", null, 0x0010D0);
+    announce("cleaning the playfield", null, 0x0010D0);
     votes.reset("clear");
 }
