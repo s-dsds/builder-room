@@ -13,9 +13,9 @@ function makeModZip(basemod, sprites) {
     console.log("building zip");
     var mdzip = new JSZip();
     if (basemod.soundpack!= "undefined") {
-        basemod = JSON.stringify(basemod);
+        basemod = JSON5.stringify(basemod);
     }
-    mdzip.file('mod.json5',basemod);
+    mdzip.file('mod.json5', basemod);
 
     mdzip.file('sprites.wlsprt', sprites, {binary:true});
     return mdzip.generate({type:"arraybuffer"});
