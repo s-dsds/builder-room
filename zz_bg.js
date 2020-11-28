@@ -55,7 +55,7 @@ window.WLROOM.onGameEnd2 = function() {
 }
 
 function announce(msg, player, color, style) {
-	window.WLROOM.sendAnnouncement(msg, player.id, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
+	window.WLROOM.sendAnnouncement(msg, player!=null?player.id:null, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
 }
 function notifyAdmins(msg, logNotif = false) {
 	getAdmins().forEach((a) => { window.WLROOM.sendAnnouncement(msg, a.id); });
