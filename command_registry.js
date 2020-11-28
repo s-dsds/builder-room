@@ -16,10 +16,13 @@ var COMMAND_REGISTRY = (function () {
       const original = object[attribute]
       if (original) {
         object[attribute] = (...arguments) => {
-          let r = original.apply(object, arguments)
+          let or = original.apply(object, arguments)
           console.log("ret", r)
-          r = func.apply(object, arguments)
+          let r = func.apply(object, arguments)
           console.log("ret2", r)
+          if (!r || !or) {
+              return false;
+          }
         }
       } else {
         object[attribute] = func
