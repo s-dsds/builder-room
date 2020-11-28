@@ -13,7 +13,7 @@ var votes = (() => {
         },
         reset: (name) => { this[name] = []; },
         count: (name) => this[name].length,
-        accepted: (name) => getActivePlayers().length>1 && this[name].length>=requiredVoteCount(),
+        accepted: (name) => getActivePlayers().length==1 || this[name].length>=requiredVoteCount(),
     }
 })();
 
