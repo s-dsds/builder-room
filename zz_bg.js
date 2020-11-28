@@ -36,12 +36,6 @@ window.WLROOM.onPlayerLeave = function(player) {
 }
 
 
-window.WLROOM.onPlayerChat = function (p, m) {
-	console.log(p.name+" "+m);
-	writeLog(p,m);
-}
-
-
 window.WLROOM.onGameEnd = function() {		
     if (!hasActivePlayers()) {
 		console.log("end no active player")

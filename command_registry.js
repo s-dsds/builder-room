@@ -137,7 +137,7 @@ var COMMAND_REGISTRY = (function () {
             log('command registry is already loaded, you can change settings use COMMAND_REGISTRY.loadSettings()', settings)
             return
         }
-        this.room=argRoom 
+        room=argRoom 
         loadSettings(confArgs)
         log('loading command registry', settings)
         window.CRPLUGIN = true
