@@ -1,10 +1,7 @@
-const SPLASH_STATE = 0;
 const GAME_RUNNING_STATE = 1;
 const BUILDING_SATE = 2;
 
-var currState = SPLASH_STATE;
-
-function isSplash() { return currState==SPLASH_STATE; }
+var currState = SPLABUILDING_SATESH_STATE;
 
 function hasActivePlayers() {
     console.log('act',getActivePlayers().length != 0);
@@ -15,4 +12,5 @@ function getActivePlayers() {
 	return window.WLROOM.getPlayerList().filter(p => p.team !=0);
 }
 
-function isFull() { return getActivePlayers().length>=2; }
+function isFight() { return currState==GAME_RUNNING_STATE; }
+function isBuild() { return currState==BUILDING_SATE;}
