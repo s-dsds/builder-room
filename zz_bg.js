@@ -61,7 +61,7 @@ function setBuildMod() {
 	loadMod(bm);
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 0;
-	sett.scoreLimit = 0;
+	sett.scoreLimit = 999;
 	window.WLROOM.setSettings(sett);
 	currState=BUILDING_STATE;
 	votes.reset("build");

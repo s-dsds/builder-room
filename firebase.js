@@ -50,7 +50,8 @@ function initFirebase() {
 
 
 function listenForModsEvents() {
-	modsRef.on('child_added', addNewMod);
+    modsRef.on('child_added', addNewMod);
+    modsRef.on('child_changed', addNewMod);
 }
 
 function addNewMod(childSnapshot) {
