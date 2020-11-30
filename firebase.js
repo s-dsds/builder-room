@@ -63,8 +63,8 @@ function addNewMod(childSnapshot) {
     currMod = k;
   }
   
-  console.log("mod `"+k+"`has been added to memory");
-  notifyAdmins("mod `"+k+"`has been added to memory");
+  console.log("mod `"+k+"`: `"+v.name+"` v `"+v.version+"` has been added to memory");
+  notifyAdmins("mod `"+k+"`: `"+v.name+"` v `"+v.version+"` has been added to memory");
 }
 
 function loadExistingMods() {

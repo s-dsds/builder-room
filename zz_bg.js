@@ -28,7 +28,7 @@ function announce(msg, player, color, style) {
 	window.WLROOM.sendAnnouncement(msg, player!=null?player.id:null, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
 }
 function notifyAdmins(msg, logNotif = false) {
-	getAdmins().forEach((a) => { window.WLROOM.sendAnnouncement(msg, a.id); });
+	getAdmins().forEach((a) => { window.WLROOM.sendAnnouncement(">>"+msg+"<<", a.id, 0xFE33FE, "bold"); });
 	if (logNotif) {
 		notifsRef.push({msg:msg, time:Date.now(), formatted:(new Date(Date.now()).toLocaleString())});
 	}
