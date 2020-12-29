@@ -25,12 +25,13 @@ function makeModZip(basemod, sprites) {
 
 function addMod(id, json) {
     mods.set(id, {
-            id: id,
-            name: json.name,
-            version: json.version,
-            json: json.data,
-            author: json.author
-    });
+        id: id,
+        name: json.name,
+        version: json.version,
+        json: json.data,
+        author: json.author,
+        sprites: json.sprites??null,
+    } );
 }
 
 function getCurrentMod() {
