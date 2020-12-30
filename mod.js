@@ -5,7 +5,7 @@ function loadMod(mod) {
     console.log("loading mod "+mod.name);
     if (typeof mod.zip == "undefined") {
         console.log("make zip");
-        mod.zip= makeModZip(mod.json, base_sprites);
+        mod.zip= makeModZip(mod.json, mod.sprites!=null?_base64ToArrayBuffer(mod.sprites):base_sprites);
     }
     window.WLROOM.loadMod(mod.zip);
 }
