@@ -7,7 +7,7 @@ window.WLROOM.onPlayerLeave = function(player) {
 	auth.delete(player.id);
 
 	if (!hasActivePlayers()) {
-		setBuildMod();
+		setFight();
 	}
 }
 
@@ -15,7 +15,7 @@ window.WLROOM.onPlayerLeave = function(player) {
 window.WLROOM.onGameEnd = function() {		
     if (!hasActivePlayers()) {
 		console.log("end no active player")
-		setBuildMod();
+		setFight();
 	}
 }
 

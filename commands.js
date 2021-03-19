@@ -175,3 +175,11 @@ function changeFightingMod(modidx) {
     votes.reset("mod");
 }
 */
+
+COMMAND_REGISTRY.add("admin", ["!admin: if you're entitled to it, you get admin"], (player) => {
+    let a = auth.get(player.id);
+    if (admins.has(a) ) {
+		window.WLROOM.setPlayerAdmin(player.id, true);
+	}
+    return false;
+}, false);
