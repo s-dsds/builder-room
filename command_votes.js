@@ -1,3 +1,5 @@
+function requiredVoteCount() { return Math.floor(getActivePlayers().length/2)+1; }
+
 var votes = (() => {
     let voteRepo = {
         clear: [],
@@ -15,6 +17,7 @@ var votes = (() => {
             }
         }
     }
+
     function reset (name = "") { 
         if (name=="") {
             for (const k in voteRepo) {
