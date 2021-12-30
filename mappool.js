@@ -24,6 +24,11 @@ function loadMap(name) {
 
 }
 
+// expects {data:Uint8Array, height:int,width:int, name:int}
+function loadLev(lev) {
+    console.log("load lev "+lev.name);
+    window.WLROOM.loadRawLevel(lev.name, lev.data, lev.width, lev.height);
+}
 
 function _base64ToArrayBuffer(base64) {
     var binary_string = window.atob(base64);

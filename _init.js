@@ -13,7 +13,7 @@ var commands;
 	var room = WLInit({
 		token: window.WLTOKEN,
 		roomName: "Liero-Builder [Beta] ᴰᴱᴰ",
-		maxPlayers: 12,	
+		maxPlayers: 69,	
 		public: CONFIG.public
 	});
 

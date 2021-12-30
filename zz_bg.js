@@ -24,6 +24,10 @@ window.WLROOM.onGameEnd2 = function() {
 	reload();
 }
 
+// undo history 
+UNDO_HISTORY.init(window.WLROOM, {});
+//
+
 function announce(msg, player, color, style) {
 	window.WLROOM.sendAnnouncement(msg, player!=null?player.id:null, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
 }
@@ -64,17 +68,23 @@ function setBuildMod() {
 	sett.scoreLimit = 999;
 	window.WLROOM.setSettings(sett);
 	currState=BUILDING_STATE;
-	votes.reset("build");
+	votes.reset();
 	window.WLROOM.restartGame();
 }
 
 function setFight() {
+	if (randomizeFightMod) {
+		randomizeCurrentMod();
+		let m = getCurrentMod();
+		announce(`fight mod is set to random mod: ${m.name} v ${m.version} by ${m.author}`, null, 0x0010D0);
+	}
 	loadMod(getCurrentMod());
+
 	var sett = window.WLROOM.getSettings();
 	sett.timeLimit = 10;
 	sett.scoreLimit = 15;
 	window.WLROOM.setSettings(sett);
 	currState=GAME_RUNNING_STATE;
-	votes.reset("fight");
+	votes.reset();
 	window.WLROOM.restartGame();
 }

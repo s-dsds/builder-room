@@ -1,5 +1,6 @@
 var mods = new Map();
 var currMod = "0";
+var randomizeFightMod = false;
 
 function loadMod(mod) {
     console.log("loading mod "+mod.name);
@@ -45,4 +46,14 @@ function listMods() {
         mn.push({[key]:"`"+value.name+"` v`"+value.version+"`"})
       }
     return JSON.stringify(mn)
+}
+
+function randomizeCurrentMod() {
+    let midxarr = Array.from(mods.keys()).filter(e => e!="build");
+    let randidx = Math.floor(Math.random() * midxarr.length);
+    currMod=midxarr[randidx];
+}
+
+function setRandomFightMod(off=false) {
+    randomizeFightMod=(!off);
 }
