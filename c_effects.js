@@ -252,6 +252,23 @@ var effects = {
             data:ret
         }
     },
+    borderbottom: function (map) {
+        const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.ROCK]
+        const rockReplace = 24
+        let ret = map.data.slice(0); //copy
+        let j = map.height-1
+        for (let i = 0; i<map.width; i++) { // bottom border
+            if (!allowedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
+                ret[(j*map.width)+i]= rockReplace
+            }
+        }       
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
     dirt2rock: function (map) {
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.DIRT, MATERIAL.DIRT_2]
         let ret = map.data.slice(0); //copy
