@@ -5,12 +5,12 @@ COMMAND_REGISTRY.add("fx", [()=>"!fx "+JSON.stringify(effectList)+": adds fx to 
         let big=false;
         fxs = fx.map(
             function(e) {	
-                let trimmed=e.trim();
+                let trimmed=e.split("#").shift().trim();
                 if (effectList.indexOf(trimmed) >= 0 && (trimmed!="bigger" || big==false)) { // filtering bigger since it actually breaks when chained
                     if (trimmed == "bigger") {
                         big=true;
                     }
-                    return trimmed;
+                    return e;
               }
             }
         ).filter(x => x).slice(0, 5);
@@ -33,8 +33,10 @@ function loadEffects(fxs, data) {
         }        
         try {
             for (var idx in fxs) {
-                console.log(fxs[idx]);
-                data = effects[fxs[idx]](data);
+                let all = fxs[idx].split("#")
+                let fx = all.shift()
+                console.log(fx);
+                data = effects[fx](data, ...all);
             }
             loadLev(data);
         } catch(e) {

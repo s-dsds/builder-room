@@ -218,7 +218,7 @@ var effects = {
         }
     },
     border: function (map) {
-        const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.ROCK]
+        const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
         let ret = map.data.slice(0); //copy
         let j = 0;
@@ -253,7 +253,7 @@ var effects = {
         }
     },
     borderbottom: function (map) {
-        const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.ROCK]
+        const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
         let ret = map.data.slice(0); //copy
         let j = map.height-1
@@ -269,13 +269,16 @@ var effects = {
             data:ret
         }
     },
-    dirt2rock: function (map) {
+    dirt2rock: function (map, colorstr=null) {
+        let color = parseInt(colorstr)
+        color = isNaN(color) || !colorstr || color > 255? false : color
+
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.DIRT, MATERIAL.DIRT_2]
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
             for (let i = 0; i<map.width; i++) { 
                 if (tobereplacedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
-                    ret[(j*map.width)+i]= randomGreyRock()
+                    ret[(j*map.width)+i]= color===false? randomGreyRock(): color
                 }
             }
         }    
@@ -308,6 +311,104 @@ var effects = {
         for (let j = 0; j < map.height; j++ ) { 
             for (let i = 0; i<map.width; i++) { 
                     ret[(j*map.width)+i]= randomBG()                
+            }
+        }    
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
+    fillgaps: function (map,pixel=0,colorstr=null)  {   
+        pixel = parseInt(pixel)
+        pixel = isNaN(pixel) ? 0 : pixel
+        let color = parseInt(colorstr)
+        color = isNaN(color) || !colorstr  || color > 255? false : color
+
+        let maxHorizontalPixels = 3+pixel 
+        let maxVerticalPixels = 7+pixel
+        let ret = map.data.slice(0); //copy
+        const allowedMat = [MATERIAL.UNDEF,MATERIAL.WORM,MATERIAL.ROCK]       
+                
+        for (let j = 0; j < map.height; j++ ) {                          
+            let lastAllowedH = -1
+            let nextAllowedH = -1           
+            for (let i = 0; i<map.width; i++) {    
+                let currentIsAllowed = allowedMat.includes(defaultMaterials[ret[(j*map.width)+i]]) 
+                if (currentIsAllowed) {
+                    lastAllowedH = i  
+                    nextAllowedH = -1                                   
+                    continue
+                } 
+
+                if (nextAllowedH==-1 && (i+1)<map.width) {       
+                    nextAllowedH = (() => {
+                        for (let ii = 1+i; ii<map.width; ii++) { 
+                            if (allowedMat.includes(defaultMaterials[ret[(j*map.width)+ii]])) {
+                                return ii
+                            }
+                        } 
+                        return map.width
+                    })()                            
+                                        
+                }
+                                    
+                if (i < nextAllowedH && i > lastAllowedH && (nextAllowedH-lastAllowedH)<=maxHorizontalPixels) {                         
+                    ret[(j*map.width)+i] = color===false?randomGreyRock():color
+                }
+
+            }
+                
+        } 
+
+        for (let i = 0; i<map.width; i++) {                                   
+            let lastAllowedV = -1
+            let nextAllowedV = -1           
+            for (let j = 0; j < map.height; j++ ) {   
+                let currentIsAllowed = allowedMat.includes(defaultMaterials[ret[(j*map.width)+i]]) 
+                if (currentIsAllowed) {
+                    lastAllowedV = j  
+                    nextAllowedV = -1                                     
+                    continue
+                } 
+
+                if (nextAllowedV==-1 && (i+1)<map.height) {       
+                    nextAllowedV = (() => {
+                        for (let jj = 1+j; jj < map.height; jj++ ) {                         
+                            if (allowedMat.includes(defaultMaterials[ret[(jj*map.width)+i]])) {
+                                return jj
+                            }
+                        } 
+                        return map.height
+                    })()                            
+                                        
+                }
+                                    
+                if (j < nextAllowedV && j > lastAllowedV && (nextAllowedV-lastAllowedV)<=maxVerticalPixels) {     
+                    console.log(j, nextAllowedV,lastAllowedV,maxVerticalPixels)                              
+                    ret[(j*map.width)+i] = color===false?randomGreyRock():color
+                }
+
+            }
+                
+        }  
+        
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
+    clearbg: function (map)  {      
+        const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.BG, MATERIAL.BG_SEESHADOW] 
+        let ret = map.data.slice(0); //copy
+        for (let j = 0; j < map.height; j++ ) { 
+            for (let i = 0; i<map.width; i++) { 
+                if (tobereplacedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
+                    ret[(j*map.width)+i]= randomBG()                
+                }
             }
         }    
         return { 
