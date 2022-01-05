@@ -398,7 +398,7 @@ var effects = {
                     continue
                 } 
 
-                if (nextAllowedV==-1 && (i+1)<map.height) {       
+                if (nextAllowedV==-1 && (j+1)<map.height) {       
                     nextAllowedV = (() => {
                         for (let jj = 1+j; jj < map.height; jj++ ) {                         
                             if (allowedMat.includes(defaultMaterials[ret[(jj*map.width)+i]])) {
