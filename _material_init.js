@@ -17,3 +17,4 @@ const defaultMaterials = [0, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
 var randomBG = () => [160,161,162,163][Math.round(Math.random()*3)]
 const GreyRock = [...Array.from(Array(11).keys()).map((x)=>x+19)];
 var randomGreyRock = () => GreyRock[Math.round(Math.random()*10)]
+var randomColor = () => Math.round(Math.random()*255)

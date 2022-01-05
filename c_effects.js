@@ -252,14 +252,17 @@ var effects = {
             data:ret
         }
     },
-    borderbottom: function (map) {
+    borderbottom: function (map, colorstr=null) {
+        let color = parseInt(colorstr)
+        color = isNaN(color) || !colorstr || color > 255? false : color
+
         const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
         let ret = map.data.slice(0); //copy
         let j = map.height-1
         for (let i = 0; i<map.width; i++) { // bottom border
             if (!allowedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
-                ret[(j*map.width)+i]= rockReplace
+                ret[(j*map.width)+i]= color===false? rockReplace: color
             }
         }       
         return { 
@@ -279,6 +282,27 @@ var effects = {
             for (let i = 0; i<map.width; i++) { 
                 if (tobereplacedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
                     ret[(j*map.width)+i]= color===false? randomGreyRock(): color
+                }
+            }
+        }    
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
+    replacecolor: function (map, colorstr=null, color2str=null) {
+        let color = parseInt(colorstr)
+        color = isNaN(color) || !colorstr || color > 255? randomColor() : color
+        let color2 = parseInt(color2str)
+        color2 = isNaN(color2) || !color2str || color2 > 255? randomColor() : color2
+        
+        let ret = map.data.slice(0); //copy
+        for (let j = 0; j < map.height; j++ ) { 
+            for (let i = 0; i<map.width; i++) { 
+                if (color == map.data[(j*map.width)+i]) {
+                    ret[(j*map.width)+i]= color2
                 }
             }
         }    
