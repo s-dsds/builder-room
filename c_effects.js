@@ -347,7 +347,7 @@ var effects = {
     fillgaps: function (map,pixel=0,colorstr=null)  {   
         pixel = parseInt(pixel)
         pixel = isNaN(pixel) ? 0 : pixel
-        pixel = pixel > 25 ? 25 : pixel
+        pixel = pixel > 40 ? 40 : pixel
         let color = parseInt(colorstr)
         color = isNaN(color) || !colorstr  || color > 255? false : color
 
@@ -410,8 +410,7 @@ var effects = {
                                         
                 }
                                     
-                if (j < nextAllowedV && j > lastAllowedV && (nextAllowedV-lastAllowedV)<=maxVerticalPixels) {     
-                    console.log(j, nextAllowedV,lastAllowedV,maxVerticalPixels)                              
+                if (j < nextAllowedV && j > lastAllowedV && (nextAllowedV-lastAllowedV)<=maxVerticalPixels) {                                                      
                     ret[(j*map.width)+i] = color===false?randomGreyRock():color
                 }
 
