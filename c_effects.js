@@ -57,6 +57,9 @@ var effects = {
         let line = 0;
         const ln =  map.width*map.height;
         for (let i = 0; i < ln; i++) {
+            if (i && i%map.width==0) {
+                line+=2;
+            }    
             if (typeof ret[line]=="undefined") {
                 ret.push([])
                 ret.push([])
@@ -65,10 +68,7 @@ var effects = {
             ret[line].push(currpix)
             ret[line].push(currpix)
             ret[line+1].push(currpix)
-            ret[line+1].push(currpix)
-            if (i%map.width==0) {
-                line+=2;
-            }          
+            ret[line+1].push(currpix)      
         }
         return { 
             name: map.name,
