@@ -35,7 +35,9 @@ var COMMAND_REGISTRY = (function () {
      
      let settings = {
          motd: `Commands are available in this room, type !help for more informations`,
-         motd_color: 0x00A9D0
+         motd_color: 0x00A9D0,
+         error_color: 0xFF0000,
+         help_color: 0x50A9D0,
      } //default settings
  
      const loadSettings = (confArgs) => {
@@ -80,7 +82,7 @@ var COMMAND_REGISTRY = (function () {
                  return command.f(p, ...commandText.splice(1))
              } catch (e) {
                  console.log(e)
-                 room.sendAnnouncement(`Error: ${e.message}`, p.id, 0xFF2222)
+                 room.sendAnnouncement(`Error: ${e.message}`, p.id, settings.error_color)
              }
          }
          return true
@@ -134,12 +136,18 @@ var COMMAND_REGISTRY = (function () {
              msg.push('type "!help commandname" for help on a specific command')
              return msg
          })()
-         msg.forEach((m) => {
-             if (typeof m=="function") {
-                 m = m();
-             }
-             room.sendAnnouncement(m, p.id, settings.motd_color)
-         })        
+         const printMsg = (m) => {
+            if (typeof m=="function") {
+                m = m();
+            }
+            if (typeof m.reduce=="function") {
+                m.forEach(printMsg)        
+            } else {
+               room.sendAnnouncement(m, p.id, settings.help_color, "small")
+            }
+            
+        }
+         msg.forEach(printMsg)        
      }
  
      const init = (argRoom, confArgs) => {        

@@ -1,5 +1,5 @@
 
-COMMAND_REGISTRY.add("fx", [()=>"!fx "+JSON.stringify(effectList)+": adds fx to the current map, applying a random effect or the effect provided"], (player, ...fx) => {
+COMMAND_REGISTRY.add("fx", ["!fx effect1 effect2: adds fx to the current map, applying a random effect or the effect provided, 6 effects can be chained", fxDoc], (player, ...fx) => {
     let fxs = [];
     if (typeof fx=='object') {
         let big=false;
@@ -13,7 +13,7 @@ COMMAND_REGISTRY.add("fx", [()=>"!fx "+JSON.stringify(effectList)+": adds fx to 
                     return e;
               }
             }
-        ).filter(x => x).slice(0, 5);
+        ).filter(x => x).slice(0, 6);
     }
     if (fxs.length==0) {
         fxs.push(Math.floor(Math.random() * effectList.length));

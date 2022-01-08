@@ -1,5 +1,5 @@
 var effects = {
-    stretch: function (map) {
+    stretch: function (map) /* stretches map horizontally */ {
         let ret = [];
         const ln =  map.width*map.height;
         for (let i = 0; i < ln; i++) {
@@ -13,7 +13,7 @@ var effects = {
             data:ret
         }
     },
-    stretchy: function (map) {
+    stretchy: function (map)  /* stretches map vertically */ {
         let ret = [];
         let line = 0;
         const ln =  map.width*map.height;
@@ -36,7 +36,7 @@ var effects = {
             data:ret.reduce((a, b) => a.concat(b),  [])
         }
     },
-    rotate: function (map) {
+    rotate: function (map) /* rotate maps clockwise */ {
         let ret = [];
 
         for (let j =0; j<map.width; j++) {
@@ -52,7 +52,7 @@ var effects = {
             data:ret
         }
     },
-    bigger: function(map) {
+    bigger: function(map) /* (1 pixel = 4 pixels) */ {
         let ret = [];
         let line = 0;
         const ln =  map.width*map.height;
@@ -77,7 +77,7 @@ var effects = {
             data:ret.reduce((a, b) => a.concat(b),  [])
         }
     },
-    reverse: function (map) {
+    reverse: function (map) /* reverse map vertically */ {
         let ret = [];
         const ln =  (map.width*map.height)-1;
         for (let i = ln; i >= 0; i--) {
@@ -90,7 +90,7 @@ var effects = {
             data:ret
         }
     },
-    mirror: function (map) {
+    mirror: function (map) /* mirrors map horizontally */ {
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
             for (let i = map.width-1; i >= 0; i--) {
@@ -106,7 +106,7 @@ var effects = {
             data:ret
         }
     },        
-    expand: function (map) {
+    expand: function (map) /* expands with a mirrored version */ {
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
             for (let i = 0; i<map.width; i++) {
@@ -127,7 +127,7 @@ var effects = {
             data:ret
         }
     },
-    double: function (map) {
+    double: function (map) /* copies the map to the right */  {
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
             for (let k = 0; k <2; k++) {
@@ -145,7 +145,7 @@ var effects = {
             data:ret
         }
     },
-    expandrev: function (map) {
+    expandrev: function (map) /* expands with a reversed version */ {
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
             for (let i = 0; i<map.width; i++) {
@@ -162,7 +162,7 @@ var effects = {
             data:ret
         }
     },
-    top: function (map) {
+    top: function (map)  /* cuts only the top */ {
         let ret = [];
         for (let j = 0; j < map.width*Math.round(map.height/2); j++ ) {
             ret.push(map.data[j]);      
@@ -174,7 +174,7 @@ var effects = {
             data:ret
         }
     },
-    bottom: function (map) {
+    bottom: function (map) /* cuts only the bottom */ {
         let ret = [];
         let halfy =Math.round(map.height/2);
         let half = (halfy*map.width);
@@ -188,7 +188,7 @@ var effects = {
             data:ret
         }
     },
-    left: function (map) {
+    left: function (map)  /* cuts only the left */ {
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
             for (let i = 0; i<Math.round(map.width/2); i++) {
@@ -202,7 +202,7 @@ var effects = {
             data:ret
         }
     },
-    right: function (map) {
+    right: function (map)  /* cuts only the right */  {
         let ret = [];
         let halfx =Math.round(map.width/2);
         for (let j = 0; j < map.height; j++ ) {
@@ -217,7 +217,7 @@ var effects = {
             data:ret
         }
     },
-    border: function (map) {
+    border: function (map) /* 1pixel rock border all around*/ {
         const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
         let ret = map.data.slice(0); //copy
@@ -252,9 +252,9 @@ var effects = {
             data:ret
         }
     },
-    borderbottom: function (map, colorstr=null) {
-        let color = parseInt(colorstr)
-        color = isNaN(color) || !colorstr || color > 255? false : color
+    borderbottom: function (map, colornum=null) /* 1pixel rock border only bottom*/ {
+        let color = parseInt(colornum)
+        color = isNaN(color) || !colornum || color > 255? false : color
 
         const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
@@ -272,9 +272,9 @@ var effects = {
             data:ret
         }
     },
-    dirt2rock: function (map, colorstr=null) {
-        let color = parseInt(colorstr)
-        color = isNaN(color) || !colorstr || color > 255? false : color
+    dirt2rock: function (map, colornum=null /* uses this color instead of random rock can be any color number from 0 to 255 */) /* changes all dirt materials to rock*/ {
+        let color = parseInt(colornum)
+        color = isNaN(color) || !colornum || color > 255? false : color
 
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.DIRT, MATERIAL.DIRT_2]
         let ret = map.data.slice(0); //copy
@@ -292,11 +292,11 @@ var effects = {
             data:ret
         }
     },
-    replacecolor: function (map, colorstr=null, color2str=null) {
-        let color = parseInt(colorstr)
-        color = isNaN(color) || !colorstr || color > 255? randomColor() : color
-        let color2 = parseInt(color2str)
-        color2 = isNaN(color2) || !color2str || color2 > 255? randomColor() : color2
+    replacecolor: function (map, colornum=null /* color to be replaced number from 0 to 255 */, color2num=null /* new color */) {
+        let color = parseInt(colornum)
+        color = isNaN(color) || !colornum || color > 255? randomColor() : color
+        let color2 = parseInt(color2num)
+        color2 = isNaN(color2) || !color2num || color2 > 255? randomColor() : color2
         
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
@@ -313,7 +313,7 @@ var effects = {
             data:ret
         }
     },
-    nodirt: function (map) {
+    nodirt: function (map)  /* removes all dirt */ {
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.DIRT, MATERIAL.DIRT_2]
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
@@ -330,7 +330,7 @@ var effects = {
             data:ret
         }
     },
-    fillbg: function (map)  {       
+    fillbg: function (map)  /* fill everything with random background */   {       
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
             for (let i = 0; i<map.width; i++) { 
@@ -344,12 +344,12 @@ var effects = {
             data:ret
         }
     },
-    fillgaps: function (map,pixel=0,colorstr=null)  {   
+    fillgaps: function (map, colornum=null, pixel=0 /* number of pixels added to the thresolds | x y thresolds are 3x7 by default */) /* tries filling gaps with random rock */ {   
         pixel = parseInt(pixel)
         pixel = isNaN(pixel) ? 0 : pixel
         pixel = pixel > 40 ? 40 : pixel
-        let color = parseInt(colorstr)
-        color = isNaN(color) || !colorstr  || color > 255? false : color
+        let color = parseInt(colornum)
+        color = isNaN(color) || !colornum  || color > 255? false : color
 
         let maxHorizontalPixels = 3+pixel 
         let maxVerticalPixels = 7+pixel
@@ -425,7 +425,7 @@ var effects = {
             data:ret
         }
     },
-    clearbg: function (map)  {      
+    clearbg: function (map) /* replace all background by a random background color */ {      
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.BG, MATERIAL.BG_SEESHADOW] 
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
@@ -442,7 +442,7 @@ var effects = {
             data:ret
         }
     },
-    reduce: function (map)  {       
+    reduce: function (map) /* reduce each pixel | 4 pixels = 1 pixel */ {       
         let ret = { 
             name: map.name,
             width:Math.round(map.width/2),
