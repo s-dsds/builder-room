@@ -162,57 +162,76 @@ var effects = {
             data:ret
         }
     },
-    top: function (map)  /* cuts only the top */ {
+    top: function (map, newHeight=0)  /* cuts only the top */ {
+        newHeight = parseInt(newHeight)
+        if (isNaN(newHeight) || newHeight < 1 || newHeight >= map.height) {
+            newHeight = Math.round(map.height/2)
+        }
+
         let ret = [];
-        for (let j = 0; j < map.width*Math.round(map.height/2); j++ ) {
+        for (let j = 0; j < map.width*newHeight; j++ ) {
             ret.push(map.data[j]);      
         }  
         return { 
             name: map.name,
             width:map.width,
-            height:Math.round(map.height/2),
+            height:newHeight,
             data:ret
         }
     },
-    bottom: function (map) /* cuts only the bottom */ {
+    bottom: function (map, newHeight=0) /* cuts only the bottom */ {
+        newHeight = parseInt(newHeight)
+        if (isNaN(newHeight) || newHeight < 1 || newHeight >= map.height) {
+            newHeight = Math.round(map.height/2)
+        }
+
         let ret = [];
-        let halfy =Math.round(map.height/2);
-        let half = (halfy*map.width);
+        let half = (newHeight*map.width);
         for (let j = 0; j < half; j++ ) {
             ret.push(map.data[half+j]);      
         }  
         return { 
             name: map.name,
             width:map.width,
-            height:halfy,
+            height:newHeight,
             data:ret
         }
     },
-    left: function (map)  /* cuts only the left */ {
+    left: function (map, newWidth=0)  /* cuts only the left */ {
+        console.log(newWidth)
+        newWidth = parseInt(newWidth)
+        if (isNaN(newWidth) || newWidth < 1 || newWidth >= map.width) {
+            newWidth = Math.round(map.width/2)
+        }
+
         let ret = [];
         for (let j = 0; j < map.height; j++ ) {
-            for (let i = 0; i<Math.round(map.width/2); i++) {
+            for (let i = 0; i<newWidth; i++) {
                 ret.push(map.data[(j*map.width)+i]);
             }
         } 
         return { 
             name: map.name,
-            width:Math.round(map.width/2),
+            width:newWidth,
             height:map.height,
             data:ret
         }
     },
-    right: function (map)  /* cuts only the right */  {
+    right: function (map, newWidth=0)  /* cuts only the right */  {
+        newWidth = parseInt(newWidth)
+        if (isNaN(newWidth) || newWidth < 1 || newWidth >= map.width) {
+            newWidth = Math.round(map.width/2)
+        }
+
         let ret = [];
-        let halfx =Math.round(map.width/2);
         for (let j = 0; j < map.height; j++ ) {
-            for (let i = 0; i<halfx; i++) {
-                ret.push(map.data[(j*map.width)+halfx+i]);
+            for (let i = 0; i<newWidth; i++) {
+                ret.push(map.data[(j*map.width)+newWidth+i]);
             }
         } 
         return { 
             name: map.name,
-            width:halfx,
+            width:newWidth,
             height:map.height,
             data:ret
         }
@@ -254,7 +273,7 @@ var effects = {
     },
     borderbottom: function (map, colornum=null) /* 1pixel rock border only bottom*/ {
         let color = parseInt(colornum)
-        color = isNaN(color) || !colornum || color > 255? false : color
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
 
         const allowedMat = [MATERIAL.ROCK,MATERIAL.UNDEF,MATERIAL.WORM]
         const rockReplace = 24
@@ -274,7 +293,7 @@ var effects = {
     },
     dirt2rock: function (map, colornum=null /* uses this color instead of random rock can be any color number from 0 to 255 */) /* changes all dirt materials to rock*/ {
         let color = parseInt(colornum)
-        color = isNaN(color) || !colornum || color > 255? false : color
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
 
         const tobereplacedMat = [MATERIAL.BG_DIRT,MATERIAL.BG_DIRT_2,MATERIAL.DIRT, MATERIAL.DIRT_2]
         let ret = map.data.slice(0); //copy
@@ -294,9 +313,9 @@ var effects = {
     },
     replacecolor: function (map, colornum=null /* color to be replaced number from 0 to 255 */, color2num=null /* new color */) {
         let color = parseInt(colornum)
-        color = isNaN(color) || !colornum || color > 255? randomColor() : color
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? randomColor() : color
         let color2 = parseInt(color2num)
-        color2 = isNaN(color2) || !color2num || color2 > 255? randomColor() : color2
+        color2 = isNaN(color2) || color2num===null || color2 > 255 || color2 < 0? randomColor() : color2
         
         let ret = map.data.slice(0); //copy
         for (let j = 0; j < map.height; j++ ) { 
@@ -349,7 +368,7 @@ var effects = {
         pixel = isNaN(pixel) ? 0 : pixel
         pixel = pixel > 40 ? 40 : pixel
         let color = parseInt(colornum)
-        color = isNaN(color) || !colornum  || color > 255? false : color
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
 
         let maxHorizontalPixels = 3+pixel 
         let maxVerticalPixels = 7+pixel
@@ -456,6 +475,62 @@ var effects = {
         }    
 
         return ret
+    },
+    addbg: function (map, top=10, right=10, bottom=10, left=10, colornum=null /* color to be used default is random background */ )  /* adds random background around current map*/ {
+        try {
+            let color = parseInt(colornum)
+            color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
+
+            console.log(map.height, map.width)            
+            let validatePixelValue = (s, c) => {
+                let r = parseInt(s)
+                if (isNaN(r) || r < 0) {
+                    return 0
+                }
+                
+                if ((r+Math.round(c/2))>2500) {
+                    return 2500-Math.round(c/2)
+                }
+                return r
+            }
+            top = validatePixelValue(top, map.height)
+            right = validatePixelValue(right, map.width)
+            bottom = validatePixelValue(bottom, map.height)
+            left = validatePixelValue(left, map.width)
+            
+    
+            let ret = [];
+            var y = 0;
+          
+            const newHeight = map.height+top+bottom
+            const newWidth = map.width+left+right
+            console.log(top, right, bottom, left,newHeight,newWidth)
+            for (let j = 0; j < newHeight; j++ ) {            
+                var x = 0
+                for (let i = 0; i<newWidth; i++) {
+                    if (j<top || j>=(map.height+top) || i<left || i>=(map.width+left)) {
+                        ret.push(color===false?randomBG():color)
+                    } else {
+                        ret.push(map.data[(y*map.width)+x]);
+                        x++
+                    }                
+                    
+                }
+                if (j>=top && j<(map.height+top-1)) {
+                    y++
+                }            
+            } 
+            return { 
+                name: map.name,
+                width:newWidth,
+                height:newHeight,
+                data:ret
+            }
+        } catch (e) {
+            console.log("ee", e)
+        }
+        return map
+       
     },
 }
 

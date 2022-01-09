@@ -51,8 +51,8 @@ COMMAND_REGISTRY.add(["clear", "c"], ["!clear or !c: reload a clean map / submit
 
 COMMAND_REGISTRY.add(["forceclear","fc"], ["!forceclear x y or !fc x y: reload a clean map, if passed x && y params it will change the size of the map"], (player, x, y)=> {
     if (x && y) {
-        x = x >=5000?5000:x;
-        y = y >=5000?5000:y;
+        x = x >=5000?5000:parseInt(x);
+        y = y >=5000?5000:parseInt(y);
         loadEffects(["fillbg", "border"], {
             name: `empty map of ${x} per ${y}`,
             data: [], 
