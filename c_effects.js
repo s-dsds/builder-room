@@ -477,60 +477,101 @@ var effects = {
         return ret
     },
     addbg: function (map, top=10, right=10, bottom=10, left=10, colornum=null /* color to be used default is random background */ )  /* adds random background around current map*/ {
-        try {
-            let color = parseInt(colornum)
-            color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
+        let color = parseInt(colornum)
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
 
-            console.log(map.height, map.width)            
-            let validatePixelValue = (s, c) => {
-                let r = parseInt(s)
-                if (isNaN(r) || r < 0) {
-                    return 0
-                }
-                
-                if ((r+Math.round(c/2))>2500) {
-                    return 2500-Math.round(c/2)
-                }
-                return r
+        let validatePixelValue = (s, c) => {
+            let r = parseInt(s)
+            if (isNaN(r) || r < 0) {
+                return 0
             }
-            top = validatePixelValue(top, map.height)
-            right = validatePixelValue(right, map.width)
-            bottom = validatePixelValue(bottom, map.height)
-            left = validatePixelValue(left, map.width)
             
-    
-            let ret = [];
-            var y = 0;
-          
-            const newHeight = map.height+top+bottom
-            const newWidth = map.width+left+right
-            console.log(top, right, bottom, left,newHeight,newWidth)
-            for (let j = 0; j < newHeight; j++ ) {            
-                var x = 0
-                for (let i = 0; i<newWidth; i++) {
-                    if (j<top || j>=(map.height+top) || i<left || i>=(map.width+left)) {
-                        ret.push(color===false?randomBG():color)
-                    } else {
-                        ret.push(map.data[(y*map.width)+x]);
-                        x++
-                    }                
-                    
-                }
-                if (j>=top && j<(map.height+top-1)) {
-                    y++
-                }            
-            } 
-            return { 
-                name: map.name,
-                width:newWidth,
-                height:newHeight,
-                data:ret
+            if ((r+Math.round(c/2))>2500) {
+                return 2500-Math.round(c/2)
             }
-        } catch (e) {
-            console.log("ee", e)
+            return r
         }
-        return map
-       
+        top = validatePixelValue(top, map.height)
+        right = validatePixelValue(right, map.width)
+        bottom = validatePixelValue(bottom, map.height)
+        left = validatePixelValue(left, map.width)
+        
+
+        let ret = [];
+        var y = 0;
+        
+        const newHeight = map.height+top+bottom
+        const newWidth = map.width+left+right
+        
+        for (let j = 0; j < newHeight; j++ ) {            
+            var x = 0
+            for (let i = 0; i<newWidth; i++) {
+                if (j<top || j>=(map.height+top) || i<left || i>=(map.width+left)) {
+                    ret.push(color===false?randomBG():color)
+                } else {
+                    ret.push(map.data[(y*map.width)+x]);
+                    x++
+                }                
+                
+            }
+            if (j>=top && j<(map.height+top-1)) {
+                y++
+            }            
+        } 
+        return { 
+            name: map.name,
+            width:newWidth,
+            height:newHeight,
+            data:ret
+        }      
+    },
+    autocrop: function (map)  /* automatically crops the map around any non BG or SEE SHADOW pixels | BG dirt is kept */ {
+        const notAllowedMat = [MATERIAL.BG,MATERIAL.BG_SEESHADOW]
+        let top = -1
+        let right = -1
+        let bottom = -1
+        let left = -1
+        let newWidth=map.width;
+        let newHeight=map.height
+        
+        let ret = [];
+
+        for (let j = 0; j < map.height; j++ ) {            
+            for (let i = 0; i<map.width; i++) {
+                    let isAllowed = !notAllowedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])
+                    if (isAllowed) {
+                        if (top<0) {
+                            top=j
+                        }
+                        if (right<i) {
+                            right=i
+                        }
+                        if (bottom<j) {
+                            bottom=j
+                        }
+                        if (left<0 || left>i) {
+                            left=i                            
+                        }
+                    }
+                
+            }                        
+        }
+        newHeight = bottom-top+1
+        newWidth = right-left+1
+        
+        for (let j = top; j < (bottom+1); j++ ) {            
+            for (let i = left; i<(right+1); i++) {                    
+                ret.push(map.data[(j*map.width)+i]);
+                
+            }                        
+        } 
+
+        return { 
+            name: map.name,
+            width:newWidth,
+            height:newHeight,
+            data:ret
+        }      
     },
 }
 
