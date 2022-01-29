@@ -7,4 +7,5 @@ var COLORS = {
     INFO: 0x9bec80,
     PRIVATE: 0xbcbcbc,
     NORMAL: 0x8f8f8f,
+    IMPORTANT: 0xEAFF00
 }

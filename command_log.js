@@ -15,7 +15,7 @@ window.WLROOM.onPlayerJoin = (player) => {
 	announce("current fighting mod is `"+mod.name+"` version `"+mod.version+"` by `"+mod.author+"`", player, COLORS.ANNOUNCE);
     announce("current building mod is version `"+bmod.version+"`", player, COLORS.ANNOUNCE);
     announce("This is currently an early Beta version, so it might break, please tell dsds if you encounter any errors or if you have any comments", player, COLORS.ANNOUNCE, "small");
-    announce("Since some players, especially @@Gatamalo have been banning others & misbehaving since I gave admin to anyone joining alone, I've disabled the feature: you can thank that guy", player, COLORS.ANNOUNCE_BRIGHT, "bigger");
+    announce("Since some players, especially @@Gatamalo have been banning others & misbehaving since I gave admin to anyone joining alone, I've disabled the feature: you can thank that guy", player, COLORS.IMPORTANT, "bold");
 
 	if (isFight()) {
 		announce("game is running in fighting mod", player, COLORS.ANNOUNCE_BRIGHT);
