@@ -166,11 +166,13 @@ COMMAND_REGISTRY.add(["quit","q"], ["!quit or !q: spectate if in game"], (player
 
 
 COMMAND_REGISTRY.add(["join","j"], ["!join or !j: joins the game if spectating"], (player)=> {
-    moveToGame(player);
+    if (!window.WLROOM.getSettings().teamsLocked || player.admin) {
+        moveToGame(player);
+    }
     return false;
 }, false);
 
-COMMAND_REGISTRY.add(["joinquit","jq"], ["!joinquit or jq: move out and back in the game"], (player)=> {
+COMMAND_REGISTRY.add(["joinquit","jq", "quitjoin", "qj"], ["!joinquit or jq or quitjoin or qj: move out and back in the game"], (player)=> {
     moveToSpec(player)
     moveToGame(player)
     return false;
