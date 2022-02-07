@@ -1,39 +1,39 @@
+var maxMaxWidthHeight = 3000
 var effects = {
-    stretch: function (map) /* stretches map horizontally */ {
-        let ret = [];
-        const ln =  map.width*map.height;
-        for (let i = 0; i < ln; i++) {
-            ret.push(map.data[i]);
-            ret.push(map.data[i]);
-        }
+    stretch: function (map) /* stretches map horizontally, will cut if more than 3000pix wide */ {
+        let ret = [];      
+        const maxedOutWidth=map.width*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.width
+        
+        for (let j = 0; j < map.height; j++ ) {
+            for (let i = 0; i<maxedOutWidth; i++) {
+                ret.push(map.data[(j*map.width)+i]);
+                ret.push(map.data[(j*map.width)+i]);
+            }
+        } 
+
         return { 
             name: map.name,
-            width:map.width*2,
+            width:maxedOutWidth*2,
             height:map.height,
             data:ret
         }
     },
-    stretchy: function (map)  /* stretches map vertically */ {
-        let ret = [];
-        let line = 0;
-        const ln =  map.width*map.height;
-        for (let i = 0; i < ln; i++) {
-            if (typeof ret[line]=="undefined") {
-                ret.push([])
-                ret.push([])
-            }
-            let currpix =map.data[i];
-            ret[line].push(currpix)
-            ret[line+1].push(currpix)
-            if (i%map.width==0) {
-                line+=2;
-            }          
+    stretchy: function (map)  /* stretches map vertically, will cut if more than 3000pix high */ {
+        let ret = [];    
+        const maxedOutHeight=map.height*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.height            
+        for (let j = 0; j < maxedOutHeight; j++ ) {
+            for (let i = 0; i<map.width; i++) {
+                let currpix =map.data[(j*map.width)+i];
+                ret[(j*2*map.width)+i] = currpix
+                ret[(((j*2)+1)*map.width)+i] = currpix
+            }            
         }
+  
         return { 
             name: map.name,
             width:map.width,
-            height:map.height*2,
-            data:ret.reduce((a, b) => a.concat(b),  [])
+            height:maxedOutHeight*2,
+            data:ret
         }
     },
     rotate: function (map) /* rotate maps clockwise */ {
@@ -52,29 +52,28 @@ var effects = {
             data:ret
         }
     },
-    bigger: function(map) /* (1 pixel = 4 pixels) */ {
-        let ret = [];
-        let line = 0;
-        const ln =  map.width*map.height;
-        for (let i = 0; i < ln; i++) {
-            if (i && i%map.width==0) {
-                line+=2;
-            }    
-            if (typeof ret[line]=="undefined") {
-                ret.push([])
-                ret.push([])
-            }
-            let currpix =map.data[i];
-            ret[line].push(currpix)
-            ret[line].push(currpix)
-            ret[line+1].push(currpix)
-            ret[line+1].push(currpix)      
+    bigger: function(map) /* (1 pixel = 4 pixels) | will cut anything above 3000 pixels*/ {
+        let ret = [];        
+        let newMaxedOutWidth = (map.width*2)>maxMaxWidthHeight?maxMaxWidthHeight:(map.width*2)
+        let newMaxedOutHeight = (map.height*2)>maxMaxWidthHeight?maxMaxWidthHeight:(map.height*2)  
+        for (let j = 0; j < newMaxedOutHeight; j+=2) {
+            let currY = (j==0?j:j/2)
+            for (let i = 0; i<newMaxedOutWidth; i+=2) {
+                let currpix =map.data[(currY*map.width)+(i==0?i:i/2)];
+                
+                ret[(j*newMaxedOutWidth)+i] = currpix
+                ret[((j+1)*newMaxedOutWidth)+i] = currpix
+                
+                ret[(j*newMaxedOutWidth)+i+1] = currpix
+                ret[((j+1)*newMaxedOutWidth)+i+1] = currpix
+            }            
         }
+  
         return { 
             name: map.name,
-            width:map.width*2,
-            height:map.height*2,
-            data:ret.reduce((a, b) => a.concat(b),  [])
+            width:newMaxedOutWidth,
+            height:newMaxedOutHeight,
+            data:ret
         }
     },
     reverse: function (map) /* reverse map vertically */ {
@@ -107,7 +106,8 @@ var effects = {
         }
     },        
     expand: function (map) /* expands with a mirrored version */ {
-        let ret = [];
+        let ret = [];     
+        const maxedOutWidth=map.width*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.width
         for (let j = 0; j < map.height; j++ ) {
             for (let i = 0; i<map.width; i++) {
                 
@@ -115,49 +115,75 @@ var effects = {
                     
             }
             for (let i = map.width-1; i >= 0; i--) {
-                
+                if(  (i+map.width)<(maxMaxWidthHeight)) { //not good
                     ret.push(map.data[(j*map.width)+i]);
-                        
+                }    
             }
         }  
+        
         return { 
             name: map.name,
-            width:map.width*2,
+            width:maxedOutWidth*2,
             height:map.height,
             data:ret
         }
     },
     double: function (map) /* copies the map to the right */  {
         let ret = [];
+        const maxedOutWidth=map.width*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.width
         for (let j = 0; j < map.height; j++ ) {
             for (let k = 0; k <2; k++) {
                 for (let i = 0; i<map.width; i++) {
-                    
-                    ret.push(map.data[(j*map.width)+i]);
+                    if( 0==k || (i+map.width)<(maxMaxWidthHeight)) {
+                        ret.push(map.data[(j*map.width)+i]);
+                    }
                         
                 }
             }
         }  
         return { 
             name: map.name,
-            width:map.width*2,
+            width:maxedOutWidth*2,
             height:map.height,
             data:ret
         }
     },
     expandrev: function (map) /* expands with a reversed version */ {
         let ret = [];
+        const maxedOutWidth=map.width*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.width
         for (let j = 0; j < map.height; j++ ) {
             for (let i = 0; i<map.width; i++) {
                 ret.push(map.data[(j*map.width)+i]);
             }
             for (let i = 0; i<map.width; i++) {
-                    ret.push(map.data[(map.height-j-1)*map.width+i]);                        
+                if(  (i+map.width)<(maxMaxWidthHeight)) {
+                    ret.push(map.data[(map.height-j-1)*map.width+i]);  
+                }                      
             }
         } 
         return { 
             name: map.name,
-            width:map.width*2,
+            width:maxedOutWidth*2,
+            height:map.height,
+            data:ret
+        }
+    },
+    expandalt: function (map) /* expands with a reversed & mirrored version */ {
+        let ret = [];
+        const maxedOutWidth=map.width*2>maxMaxWidthHeight?Math.round(maxMaxWidthHeight/2):map.width
+        for (let j = 0; j < map.height; j++ ) {
+            for (let i = 0; i<map.width; i++) {
+                ret.push(map.data[(j*map.width)+i]);
+            }
+            for (let i = map.width-1; i >= 0; i--) {
+                if(  (i+map.width)<(maxMaxWidthHeight)) {
+                    ret.push(map.data[(map.height-j-1)*map.width+i]);  
+                }                      
+            }
+        } 
+        return { 
+            name: map.name,
+            width:maxedOutWidth*2,
             height:map.height,
             data:ret
         }
@@ -486,8 +512,8 @@ var effects = {
                 return 0
             }
             
-            if ((r+Math.round(c/2))>2500) {
-                return 2500-Math.round(c/2)
+            if ((r+Math.round(c/2))>maxMaxWidthHeight) {
+                return maxMaxWidthHeight-Math.round(c/2)
             }
             return r
         }
@@ -566,6 +592,61 @@ var effects = {
             }                        
         } 
 
+        return { 
+            name: map.name,
+            width:newWidth,
+            height:newHeight,
+            data:ret
+        }      
+    },
+    crop: function (map,x,y,zx,zy)  /* crops the map between point x y & zx zy */ {
+        let validate = (def, lower, higher,max, lowerThan=true) => {
+            if (typeof lower == 'undefined' || isNaN(lower)) {
+                lower = def
+            } else {
+                lower = parseInt(lower)
+            }
+            
+            if (typeof higher == 'undefined' || isNaN(lower)) {
+                higher = def
+            } else {
+                higher = parseInt(higher)
+            }
+            if (higher == lower) return def
+            let retv = def
+            if (lowerThan) {
+                retv = lower<higher?lower:higher
+            } else {
+                retv = lower>higher?lower:higher
+            }
+            if (retv>max) {
+                return max
+            }
+            return retv
+        }
+        const top = validate(0, y, zy,map.height-1)
+        const left = validate(0, x, zx, map.width-1)
+
+        const right = validate(map.width-1, x, zx, map.width-1, false)
+        const bottom = validate(map.height-1, y, zy,map.height-1, false)
+        
+        console.log(top, left, right, bottom)
+
+        const newWidth=right-left+1;
+        const newHeight=bottom-top+1;
+        
+        console.log(newWidth, newHeight);
+
+        let ret = [];
+        console.log(ret.length)
+        let idx = 0;
+        for (let j = top; j < (bottom+1); j++ ) {            
+            for (let i = left; i<(right+1); i++) {                    
+                ret.push(map.data[(j*map.width)+i]);
+                
+            }                        
+        } 
+        console.log(ret.length, idx)
         return { 
             name: map.name,
             width:newWidth,

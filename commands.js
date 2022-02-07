@@ -51,8 +51,8 @@ COMMAND_REGISTRY.add(["clear", "c"], ["!clear or !c: reload a clean map / submit
 
 COMMAND_REGISTRY.add(["forceclear","fc"], ["!forceclear x y or !fc x y: reload a clean map, if passed x && y params it will change the size of the map"], (player, x, y)=> {
     if (x && y) {
-        x = x >=5000?5000:parseInt(x);
-        y = y >=5000?5000:parseInt(y);
+        x = x >=maxMaxWidthHeight?maxMaxWidthHeight:parseInt(x);
+        y = y >=maxMaxWidthHeight?maxMaxWidthHeight:parseInt(y);
         loadEffects(["fillbg", "border"], {
             name: `empty map of ${x} per ${y}`,
             data: [], 
@@ -312,76 +312,3 @@ COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #
     return false;
 }, false);
 
-
-// COMMAND_REGISTRY.add(["keepattern","k"], ["!keepattern #name: saves current pattern with #name in memory (omit #)"], (player, name)=> {
-//     // if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
-//     //     announce("saving patterns doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
-//     // }
-//     // if (!isBuild()) {
-//     //     announce("you can only save a pattern while in build mode", player, COLORS.WARNING);
-//     //     return false;
-//     // }
-//     // const now =  new Date();
-
-//     // let lev = getCurrentLevelCopy()
-//     // if (lev == null) {
-//     //     announce("saving pattern failed: getting current level failed", player, COLORS.ERROR);
-//     // }
-//     // lev.name = encodeURIComponent(name)
-//     // try {
-//     //     let prom = __commitLevel(player.name, name, Array.from(lev.data), lev.width, lev.height)
-//     //     prom.then((savedName) => {
-//     //         announce(`map saved as ${savedName} you can find it at https://gitlab.com/sylvodsds/webliero-builder-maps/-/tree/master/maps/`, null, COLORS.INFO, "small");
-//     //     })
-        
-//     // } catch (e) {
-//     //     console.log("error trying saving current map", e);
-//     //     announce("saving failed: commit failed", player, COLORS.ERROR);
-//     // }
-
-//     return false;
-// }, false);
-
-// let lastUpload = null
-// COMMAND_REGISTRY.add("uploadpatterns", ["!uploadpatterns: uploads all your current patterns to gitlab"], (player)=> {
-//     // if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
-//     //     announce("saving patterns doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
-//     // }
-//     // if (!isBuild()) {
-//     //     announce("you can only save a pattern while in build mode", player, COLORS.WARNING);
-//     //     return false;
-//     // }
-//     // const now =  new Date();
-
-//     // const minSaveFrequency = 3 //in minutes
-//     // const allow = (now-lastKeep)/1000/60>minSaveFrequency
-
-//     // if (lastKeep==null || allow) {        
-//     //     lastKeep = now
-//     //     let patterns = getPatterns(player)
-//     //     if (!patterns.length) {
-//     //         announce("you have no patterns kept in memory", player, COLORS.ERROR);
-//     //     }
-//     //     lev.name = encodeURIComponent(name)
-//     //     try {
-//     //         let prom = __commitLevel(player.name, name, Array.from(lev.data), lev.width, lev.height)
-//     //         prom.then((savedName) => {
-//     //             announce(`map saved as ${savedName} you can find it at https://gitlab.com/sylvodsds/webliero-builder-maps/-/tree/master/maps/`, null, COLORS.INFO, "small");
-//     //         })
-            
-//     //     } catch (e) {
-//     //         console.log("error trying saving current map", e);
-//     //         announce("saving failed: commit failed", player, COLORS.ERROR);
-//     //     }
-//     //     return false
-//     // } 
-//     // if (!allow) {
-//     //     announce("you just can't save maps all the time, please wait a bit", player, COLORS.WARNING);        
-//     // }
-//     return false;
-// }, false);
-
-
-//clear x y
-//snap
-//save
