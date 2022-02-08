@@ -337,6 +337,46 @@ var effects = {
             data:ret
         }
     },
+    undef2rock: function (map, colornum=null /* uses this color instead of random rock can be any color number from 0 to 255 */) /* changes all undef materials to rock*/ {
+        let color = parseInt(colornum)
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
+
+        const tobereplacedMat = [MATERIAL.UNDEF, MATERIAL.WORM]
+        let ret = map.data.slice(0); //copy
+        for (let j = 0; j < map.height; j++ ) { 
+            for (let i = 0; i<map.width; i++) { 
+                if (tobereplacedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
+                    ret[(j*map.width)+i]= color===false? randomGreyRock(): color
+                }
+            }
+        }    
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
+    rock2dirt: function (map, colornum=null /* uses this color instead of random dirt can be any color number from 0 to 255 */) /* changes all rock materials to dirt*/ {
+        let color = parseInt(colornum)
+        color = isNaN(color) || colornum===null || color > 255 || color < 0? false : color
+
+        const tobereplacedMat = [MATERIAL.ROCK]
+        let ret = map.data.slice(0); //copy
+        for (let j = 0; j < map.height; j++ ) { 
+            for (let i = 0; i<map.width; i++) { 
+                if (tobereplacedMat.includes(defaultMaterials[map.data[(j*map.width)+i]])) {
+                    ret[(j*map.width)+i]= color===false? randomBrownDirt(): color
+                }
+            }
+        }    
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },    
     replacecolor: function (map, colornum=null /* color to be replaced number from 0 to 255 */, color2num=null /* new color */) {
         let color = parseInt(colornum)
         color = isNaN(color) || colornum===null || color > 255 || color < 0? randomColor() : color

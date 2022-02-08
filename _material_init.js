@@ -18,3 +18,18 @@ var randomBG = () => [160,161,162,163][Math.round(Math.random()*3)]
 const GreyRock = [...Array.from(Array(11).keys()).map((x)=>x+19)];
 var randomGreyRock = () => GreyRock[Math.round(Math.random()*10)]
 var randomColor = () => Math.round(Math.random()*255)
+const BrownDirt = [...Array.from(Array(7).keys()).map((x)=>x+12)];
+var randomBrownDirt = () => BrownDirt[Math.round(Math.random()*6)]
+var MatString = {
+    rock: [MATERIAL.ROCK],
+    undef: [MATERIAL.UNDEF, MATERIAL.WORM],
+    dirt: [MATERIAL.DIRT, MATERIAL.DIRT_2],
+    bg: [MATERIAL.BG, MATERIAL.BG_DIRT, MATERIAL.BG_DIRT, MATERIAL.BG_SEESHADOW],
+}
+
+var isColorIdxMatString = (idx, str) => {
+    try {
+        return MatString[str].includes(defaultMaterials[idx])
+    } catch(e) { }
+    return false
+}
