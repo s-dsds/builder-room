@@ -11,6 +11,7 @@ COMMAND_REGISTRY.add(["copy","keep","k"], ["!copy x y zx zy: copies in memory ev
     let lev = getCurrentLevelCopy()
     if (lev == null) {
         announce("copy failed: getting current level failed", player, COLORS.ERROR);
+        return false;
     }
     
     let pa = auth.get(player.id)
@@ -18,11 +19,13 @@ COMMAND_REGISTRY.add(["copy","keep","k"], ["!copy x y zx zy: copies in memory ev
         if (typeof copies[pa]=='undefined') {
             copies[pa] = []
         }
-        if (copies[pa].length>=maxCopies) {         
-            copies[pa] = copies[pa].slice(1, maxCopies-1)
-        }
-        if (typeof x != 'undefined') {
+
+        if (typeof x != 'undefined') {            
             lev = effects.crop(lev, x, y, zx, zy)
+        }
+
+        if (copies[pa].length>=maxCopies) {         
+            copies[pa] = copies[pa].slice(1, maxCopies)
         }
         copies[pa].push(new Copy(lev))
         announce(`copy added as copy number ${copies[pa].length-1}`, player, COLORS.INFO);
@@ -137,7 +140,7 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
             return false;
         }
         let idx = 0;
-        if (typeof z == 'undefined' || (isNaN(z) && (typeof mat =='undefined' || isNaN(mat)))) {                 
+        if (typeof z == 'undefined' || (!isNaN(z) && !isNaN(mat) && isNaN(x)) || (!isNaN(z) && isNaN(mat) && isNaN(x))) {                 
             idx = copies[pa].length-1
 
         } else {
@@ -155,7 +158,7 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
         }
         
         let position = {"x":0,"y":0}
-        if (!isNaN(z) && !isNaN(mat)) {
+        if (!isNaN(z) && !isNaN(mat) && isNaN(x)) {
             position = {"x":parseInt(z),"y":parseInt(mat)}
         } else if  (!isNaN(mat) && !isNaN(x)) {
             position = {"x":parseInt(mat),"y":parseInt(x)}
@@ -168,7 +171,7 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
             return false
         }
         let copyLev = copies[pa][idx].lev
-        
+        console.log(idx, JSON.stringify(position), material)
         let data = mergeMaps(lev, copyLev, position, material);
         loadLev(data);
     }

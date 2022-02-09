@@ -1,10 +1,10 @@
 var copies = {}
-var maxCopies = 10
+var maxCopies = 20
 
 
 class Copy {
     constructor(lev) {
-        this.time = Date.now()
+        this.time = new Date()
         this.lev = lev
     }
 }
