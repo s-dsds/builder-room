@@ -298,8 +298,8 @@ COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #
             let prom = __commitLevel(player.name, name, Array.from(lev.data), lev.width, lev.height)
             prom.then((savedName) => {
                 announce(`map saved as ${savedName} you can find it at https://gitlab.com/sylvodsds/webliero-builder-maps/-/tree/master/maps/`, null, COLORS.INFO, "small");
-            })
-            
+                addTmpMapIdxAndRefresh(savedName);
+            })            
         } catch (e) {
             console.log("error trying saving current map", e);
             announce("saving failed: commit failed", player, COLORS.ERROR);

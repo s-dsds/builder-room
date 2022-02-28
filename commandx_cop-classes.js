@@ -1,5 +1,5 @@
 var copies = {}
-var maxCopies = 20
+var maxCopies = 30
 
 
 class Copy {

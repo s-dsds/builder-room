@@ -7,6 +7,7 @@ var commentsRef;
 var notifsRef;
 
 var commands;
+var roomLink = "";
 
 (async function () {
 	console.log("Running Server...");
@@ -28,6 +29,6 @@ var commands;
 	});
 	window.WLROOM = room;
 
-	room.onRoomLink = (link) => console.log(link);
+	room.onRoomLink = (link) => { roomLink = link; console.log(link)};
 	room.onCaptcha = () => console.log("Invalid token");
 })();

@@ -45,6 +45,7 @@ function initFirebase() {
 		console.log('firebase ok');
 		//loadExistingMods();
 		listenForModsEvents();
+        console.log(roomLink);
 	})();		
 }
 
@@ -70,8 +71,7 @@ function addNewMod(childSnapshot) {
 function loadExistingMods() {
     modsRef.orderByKey().once('value', function(snapshot) {
         snapshot.forEach(addNewMod);
-      });
-      
+      });         
 }
 
 function writeLogins(p, type ="login") {
