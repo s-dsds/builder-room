@@ -1,6 +1,5 @@
 initFirebase();
-setBuildMod();
-cleanMap();
+
 
 window.WLROOM.onPlayerLeave = function(player) {  
 	writeLogins(player, "logout");
@@ -58,33 +57,32 @@ function reload() {
 
 function setBuildMod() {
 	console.log("set build");
-	let bm = mods.get("build");
-	if (typeof bm.json == "undefined") {
-		console.log("oho");
-	}
-	loadMod(bm);
-	var sett = window.WLROOM.getSettings();
-	sett.timeLimit = 0;
-	sett.scoreLimit = 999;
-	window.WLROOM.setSettings(sett);
-	currState=BUILDING_STATE;
-	votes.reset();
-	window.WLROOM.restartGame();
+    (async () => {
+        let mod = await builderfactory.getMod();
+        window.WLROOM.loadMod(mod.zip);
+        var sett = window.WLROOM.getSettings();
+        sett.timeLimit = 0;
+        sett.scoreLimit = 999;
+        window.WLROOM.setSettings(sett);
+        currState=BUILDING_STATE;
+        votes.reset();
+        window.WLROOM.restartGame();
+    })()
 }
 
 function setFight() {
 	if (randomizeFightMod) {
-		randomizeCurrentMod();
-		let m = getCurrentMod();
-		announce(`fight mod is set to random mod: ${m.name} v ${m.version} by ${m.author}`, null, COLORS.ANNOUNCE_BRIGHT);
+		setNextRandomMod();
 	}
-	loadMod(getCurrentMod());
-
-	var sett = window.WLROOM.getSettings();
-	sett.timeLimit = 10;
-	sett.scoreLimit = 15;
-	window.WLROOM.setSettings(sett);
-	currState=GAME_RUNNING_STATE;
-	votes.reset();
-	window.WLROOM.restartGame();
+    (async () => {
+        await loadMod(getCurrentMod());
+        printCurrentMod('current mod is ',null,COLORS.ANNOUNCE_BRIGHT);
+        var sett = window.WLROOM.getSettings();
+        sett.timeLimit = 10;
+        sett.scoreLimit = 15;
+        window.WLROOM.setSettings(sett);
+        currState=GAME_RUNNING_STATE;
+        votes.reset();
+        window.WLROOM.restartGame();
+    })()
 }

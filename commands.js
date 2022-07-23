@@ -125,11 +125,10 @@ COMMAND_REGISTRY.add(["mapinfo","mf"], ["!mapinfo or !mf: information on the map
 }, false);
 
 COMMAND_REGISTRY.add("mod", ["!mod xxx: sets current fighting mod, lists mods if invalid or empty"], (player, modidx) => {
-    if (""==modidx || "building"==modidx || typeof mods.get(modidx) == "undefined") {
-        announce("invalid mod", player, COLORS.WARNING);
-        for (const  [key, lmod] of mods) {
-            announce(`${key} : "${lmod.name}" "${lmod.version}" by "${lmod.author}"`, player, COLORS.INFO, "small");
-        }
+    if (""==modidx || "building"==modidx || typeof modpool[modidx] == "undefined") {
+        announce(`invalid mod, choose between 0 and ${modpool.length-1}`, player, COLORS.WARNING);
+        announce(`you can find the mod list here: https://webliero.gitlab.io/webliero-mods/zips.json`, player, COLORS.INFO, "small");
+        
         return false;
     }
     if (randomizeFightMod) {
@@ -137,9 +136,10 @@ COMMAND_REGISTRY.add("mod", ["!mod xxx: sets current fighting mod, lists mods if
         randomizeFightMod=false
 
     }
-    currMod = modidx;
-    let mod = mods.get(modidx);
-    announce(`current fight mod set to "${mod.name}" "${mod.version}" by "${mod.author}"`, null, COLORS.ANNOUNCE_BRIGHT);
+    let mod = modpool[modidx]
+    currMod = modpoolrand.indexOf(mod);
+   
+    printCurrentMod('current fight mod set to ', null, COLORS.ANNOUNCE_BRIGHT)    
     return false;
 }, true);
 
@@ -182,8 +182,7 @@ COMMAND_REGISTRY.add(["randommod","rm"], ["!randommod or !rm: switches to random
     let isOff=(off=="off");
     setRandomFightMod(isOff);
     if (isOff) {
-        let m = getCurrentMod()
-        announce(`fight mod is set to mod: ${m.name} v ${m.version} by ${m.author}`, null, COLORS.ANNOUNCE);
+        printCurrentMod(`fight mod is set to mod: `);        
     } else {
         announce("fight mod is set to be randomized each game", null, COLORS.ANNOUNCE);
     }
@@ -312,3 +311,12 @@ COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #
     return false;
 }, false);
 
+COMMAND_REGISTRY.add(["reloadbuildercache","rbc"], ["!reloadbuildercache: reloads builder mod"], (player)=> {
+    builderfactory.buildBuilderMod('default', true);
+    return false;
+}, true);
+
+COMMAND_REGISTRY.add(["reloadmodlist","rml"], ["!reloadmodlist #clearcache: reloads mod list, if clearcache == 'clearcache' or 'cc' or 'true' also clears the cache for all mods"], (player, clearcache)=> {
+    actualizeModList(clearcache=="true"||clearcache=="clearcache"||clearcache=="cc");
+    return false;
+}, true);

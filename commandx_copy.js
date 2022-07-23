@@ -122,6 +122,38 @@ COMMAND_REGISTRY.add(["paste","p"], ["!paste z [left|right|top|bottom|x y]: past
     return false;
 }, false);
 
+COMMAND_REGISTRY.add(["pastenew","pn"], ["!pastenew z]: paste memory buffer index z in full"], (player, z) => {
+    if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
+        announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
+        return false;
+    }
+    if (!isBuild()) {
+        announce("you can only paste while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    if (pa!=null) {
+        if (typeof copies[pa]=='undefined' || copies[pa].length==0) {
+            announce("you don't have any copies at the moment", player, COLORS.ERROR);
+            return false;
+        }
+        let idx = 0;
+        if (typeof z == 'undefined' || isNaN(z)) {                 
+            idx = copies[pa].length-1
+        } else {
+            idx = parseInt(z)
+            if (typeof copies[pa][idx] == 'undefined') {
+                idx = copies[pa].length-1
+            }
+        }
+
+        loadLev(copies[pa][idx].lev);
+    }
+
+    return false;
+}, false);
+
 COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: paste 1 material only (default rock) buffer index z at point x.y (default 0 0)"], (player, z, mat, x, y) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
         announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
@@ -178,6 +210,140 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
 
     return false;
 }, false);
+
+COMMAND_REGISTRY.add(["paste2weapon","pw"], ["!paste2weapon z n t]: paste memory buffer index z to a new weapon of type t with name n"], (player, z, n, t) => {
+    if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
+        announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
+        return false;
+    }
+    if (!isBuild()) {
+        announce("you can only paste while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    if (pa!=null) {
+        if (typeof copies[pa]=='undefined' || copies[pa].length==0) {
+            announce("you don't have any copies at the moment", player, COLORS.ERROR);
+            return false;
+        }
+        let idx = 0;
+        (async () => {
+            let name = await window.__getRandomName()
+            name = name.split("_").reduce((p,t) => ((t.length==1)?p:((p.indexOf('_')>0?p:p.substring(0,3))+'_'+t.substring(0,3)))).replaceAll('_','').toUpperCase()
+            let type = 'brick';            
+
+            if (typeof z == 'undefined' || isNaN(z)) {                 
+                idx = copies[pa].length-1
+                if (typeof z != 'undefined' && weaponTypes.includes(z.toLowerCase())) {
+                    type = z.toLowerCase()
+                }
+            } else {
+                idx = parseInt(z)
+                if (typeof copies[pa][idx] == 'undefined') {
+                    idx = copies[pa].length-1
+                }
+            }
+
+            if (typeof n !='undefined' && !weaponTypes.includes(n.toLowerCase())) {
+                name = n;
+            } else if (typeof n !='undefined' && weaponTypes.includes(n.toLowerCase())) {
+                type = n.toLowerCase()
+            }
+
+            if (typeof t !='undefined' && !weaponTypes.includes(t.toLowerCase())) {
+                announce(`weapon type ${t} is invalid`, player, COLORS.WARNING);
+                return false
+            } else if (typeof t !='undefined' && weaponTypes.includes(t.toLowerCase())) {
+                type = t.toLowerCase()
+            }
+
+            let copy = copies[pa][idx].lev;
+            copy =  effects.autocrop(copy)
+            const maxW = 80
+            const maxH = 80
+            while (copy.width>maxW || copy.height>maxH) {
+                copy = effects.reduce(copy)
+            }        
+
+            copy = effects.autocrop(copy)
+            copy = effects.bg2dirt(copy , 0)
+        
+      
+            await builderfactory.add(type, name, copy);
+            announce(`weapon ${name} of type ${type} added`, null, COLORS.ANNOUNCE_BRIGHT);
+            setBuildMod()
+        })()
+        
+    }
+
+    return false;
+}, true);
+
+COMMAND_REGISTRY.add(["paintbrush","pb"], ["!paintbrush c w h]: creates a paint brush of color c, width w and height h"], (player, c, w, h) => {
+    if (!isBuild()) {
+        announce("you can only paste while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    if (typeof c == 'undefined' || isNaN(c) || c<0 || c>256) {
+        announce("you need to choose a color between 0 and 256 for the paint brush", player, COLORS.WARNING);
+        return false;
+    }
+    if (pa!=null) {
+    
+        (async () => {
+            c = parseInt(c)
+
+            if (typeof w == 'undefined' || isNaN(w)) {                 
+                w = '16'
+            }
+            if (typeof h == 'undefined' || isNaN(h)) {                 
+                h = w
+            }
+             
+            await builderfactory.add('paintbrush', null, {color:parseInt(c), width: parseInt(w), height: parseInt(h)});
+            announce(`new paint brush added with color ${c}, width ${w}, and height ${h}`, null, COLORS.ANNOUNCE_BRIGHT);
+            setBuildMod()
+        })()
+        
+    }
+
+    return false;
+}, true);
+COMMAND_REGISTRY.add(["pencil","pe"], ["!pencil c w h]: creates a pencil of color c, width w and height h"], (player, c, w, h) => {
+    if (!isBuild()) {
+        announce("you can only paste while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    if (typeof c == 'undefined' || isNaN(c) || c<0 || c>256) {
+        announce("you need to choose a color between 0 and 256 for the paint brush", player, COLORS.WARNING);
+        return false;
+    }
+    if (pa!=null) {
+    
+        (async () => {
+            c = parseInt(c)
+
+            if (typeof w == 'undefined' || isNaN(w)) {                 
+                w = '16'
+            }
+            if (typeof h == 'undefined' || isNaN(h)) {                 
+                h = w
+            }
+             
+            await builderfactory.add('pencil', null, {color:parseInt(c), width: parseInt(w), height: parseInt(h)});
+            announce(`new pencil added with color ${c}, width ${w}, and height ${h}`, null, COLORS.ANNOUNCE_BRIGHT);
+            setBuildMod()
+        })()
+        
+    }
+
+    return false;
+}, true);
 
 function mergeMaps(map, mapIn, position, mat = false) {
     let maxOut = (wh, nwh, pos) => {

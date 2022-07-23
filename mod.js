@@ -1,57 +1,86 @@
-var mods = new Map();
-var currMod = "0";
+var modCache = new Map();
+var modpool = [];
+var modpoolrand = []
+var currMod = 0;
 var randomizeFightMod = false;
 
-function loadMod(mod) {
-    console.log("loading mod "+mod.name);
-    if (typeof mod.zip == "undefined") {
-        console.log("make zip");
-        mod.zip= makeModZip(mod.json, mod.sprites!=null?_base64ToArrayBuffer(mod.sprites):base_sprites);
-    }
-    window.WLROOM.loadMod(mod.zip);
-}
+let modBaseUrl = 'https://webliero.gitlab.io/webliero-mods'
 
-function makeModZip(basemod, sprites) {
-    console.log("building zip");
-    var mdzip = new JSZip();
-    if (typeof basemod.soundpack != "undefined") {        
-        basemod = JSON.stringify(basemod);
+async function getModData(modUrl) {    
+    let obj = modCache.get(modUrl)
+    if (obj) {
+      return obj;
+    }
+    try {
+        obj = await (await fetch(modUrl)).arrayBuffer();        
+    }catch(e) {
+        return null;
     }
 
-    mdzip.file('mod.json5', basemod);
-
-    mdzip.file('sprites.wlsprt', sprites, {binary:true});
-    return mdzip.generate({type:"arraybuffer"});
+    
+    modCache.set(modUrl, obj)
+    return obj;
 }
 
-function addMod(id, json) {
-    mods.set(id, {
-        id: id,
-        name: json.name,
-        version: json.version,
-        json: json.data,
-        author: json.author,
-        sprites: json.sprites??null,
-    } );
+async function loadMod(modname) {
+    const mod = await getModData(getModUrl(modname))
+    window.WLROOM.loadMod(mod);
+}
+
+function getModUrl(name) {
+    if (name.substring(0,8)=='https://') {
+        return name;
+    }
+    return modBaseUrl + '/' +  name;
+}
+
+
+async function actualizeModList(clearcache = false) {
+    if (clearcache) {
+        modCache = new Map();
+    }
+    
+    console.log("-------refreshing mod list")
+
+    let data = await (await fetch(`${modBaseUrl}/zips.json`)).json();                          
+    modpool = data.filter((v) => v!="kangaroo+dsds/buildingame.zip");
+    
+    modpoolrand = Array.from(modpool)
+    shuffleArray(modpoolrand);
+
+    console.log("- mod list refreshed -")
+    if (typeof notifyAdmins == 'function') notifyAdmins("- mod list refreshed -", true)
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 function getCurrentMod() {
-    return mods.get(currMod);
+    return modpoolrand[currMod];
 }
 
-function listMods() {
-    let mn = [];
-    for (let [key, value] of mods) {
-        if (key=="building") continue;
-        mn.push({[key]:"`"+value.name+"` v`"+value.version+"`"})
-      }
-    return JSON.stringify(mn)
+async function printCurrentMod(msg, player=null, color= COLORS.ANNOUNCE) {
+    let filename = modpoolrand[currMod]
+    let d = await getModData(getModUrl(filename))
+    let wm  = new WLK_Mod(d)
+    let str = "name '"
+    str += (wm.name && wm.name.trim()!="" && wm.name!="MERGED MOD")?wm.name.trim():filename.substring(filename.lastIndexOf("/")+1).replace(/\.zip/gi,"")
+    str +="'"
+    if (wm.author && wm.author.trim()!="") {
+        str += ` author '${wm.author}'`
+    }
+    if (wm.version && wm.version.trim()!="") {
+        str += ` version '${wm.version}'`
+    }
+    announce(msg+str, player, color);
 }
 
-function randomizeCurrentMod() {
-    let midxarr = Array.from(mods.keys()).filter(e => e!="build");
-    let randidx = Math.floor(Math.random() * midxarr.length);
-    currMod=midxarr[randidx];
+function setNextRandomMod() {
+    currMod=currMod+1<modpoolrand.length?currMod+1:0;    
 }
 
 function setRandomFightMod(off=false) {

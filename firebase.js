@@ -1,7 +1,7 @@
 var fdb;
 var commentsRef;
 var notifsRef;
-var modsRef;
+//var modsRef;
 var loginsRef;
 var statsRef;
 
@@ -40,16 +40,16 @@ function initFirebase() {
 		fdb = firebase.database();
 		commentsRef = fdb.ref('bg/comments');
         notifsRef = fdb.ref('bg/notifs');
-        modsRef = fdb.ref('bg/mods');
+      //  modsRef = fdb.ref('bg/mods');
         loginsRef = fdb.ref('bg/logins');
 		console.log('firebase ok');
 		//loadExistingMods();
-		listenForModsEvents();
-        console.log(roomLink);
+		//listenForModsEvents();        
+        initstate.push('firebase ok')
 	})();		
 }
 
-
+/*
 function listenForModsEvents() {
     modsRef.on('child_added', addNewMod);
     modsRef.on('child_changed', addNewMod);
@@ -72,7 +72,7 @@ function loadExistingMods() {
     modsRef.orderByKey().once('value', function(snapshot) {
         snapshot.forEach(addNewMod);
       });         
-}
+}*/
 
 function writeLogins(p, type ="login") {
     const now = Date.now();

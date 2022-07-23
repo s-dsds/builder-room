@@ -9,6 +9,8 @@ var notifsRef;
 var commands;
 var roomLink = "";
 
+var initstate = [];
+
 (async function () {
 	console.log("Running Server...");
 	var room = WLInit({
@@ -29,6 +31,10 @@ var roomLink = "";
 	});
 	window.WLROOM = room;
 
-	room.onRoomLink = (link) => { roomLink = link; console.log(link)};
+	room.onRoomLink = (link) => { roomLink = link; initstate.push('roomlink: '+link); console.log(link)};
 	room.onCaptcha = () => console.log("Invalid token");
 })();
+
+function printInitDone() {
+    console.log(JSON.stringify(initstate))
+}

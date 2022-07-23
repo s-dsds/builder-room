@@ -9,11 +9,12 @@ window.WLROOM.onPlayerJoin = (player) => {
 	}
 	auth.set(player.id, player.auth);
 	writeLogins(player);
-	let mod = getCurrentMod();
-	let bmod = mods.get("build");
-	announce("Welcome to the Liero Builder room!", player, COLORS.ROOM_ANNOUNCE, "bold");
-	announce("current fighting mod is `"+mod.name+"` version `"+mod.version+"` by `"+mod.author+"`", player, COLORS.ANNOUNCE);
-    announce("current building mod is version `"+bmod.version+"`", player, COLORS.ANNOUNCE);
+
+	//let bmod = mods.get("build");
+
+	announce("Welcome to the Liero Builder room!", player, COLORS.ROOM_ANNOUNCE, "bold");	
+    printCurrentMod('current fighting is ', player, COLORS.ANNOUNCE)
+    //announce("current building mod is version `"+bmod.version+"`", player, COLORS.ANNOUNCE);
     announce("This is currently an early Beta version, so it might break, please tell dsds if you encounter any errors or if you have any comments", player, COLORS.ANNOUNCE, "small");
 
 	if (isFight()) {
