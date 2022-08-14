@@ -32,7 +32,7 @@ COMMAND_REGISTRY.add(["copy","keep","k"], ["!copy x y zx zy: copies in memory ev
     }
 
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["copylist","cl"], ["!copylist: lists all the copies you have in memory"], (player, x, y) => {
     let pa = auth.get(player.id)
@@ -47,7 +47,7 @@ COMMAND_REGISTRY.add(["copylist","cl"], ["!copylist: lists all the copies you ha
     }
 
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["paste","p"], ["!paste z [left|right|top|bottom|x y]: paste memory buffer index z at point x.y or left/right/top/bottom of the map"], (player, z, x, y) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
@@ -120,14 +120,14 @@ COMMAND_REGISTRY.add(["paste","p"], ["!paste z [left|right|top|bottom|x y]: past
     }
 
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["pastenew","pn"], ["!pastenew z]: paste memory buffer index z in full"], (player, z) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
         announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
         return false;
     }
-    if (!isBuild()) {
+    if (!isBuild() && !isPalette()) {
         announce("you can only paste while in build mode", player, COLORS.WARNING);
         return false;
     }
@@ -137,6 +137,9 @@ COMMAND_REGISTRY.add(["pastenew","pn"], ["!pastenew z]: paste memory buffer inde
         if (typeof copies[pa]=='undefined' || copies[pa].length==0) {
             announce("you don't have any copies at the moment", player, COLORS.ERROR);
             return false;
+        }
+        if (isPalette()) {
+            setBuildMod()
         }
         let idx = 0;
         if (typeof z == 'undefined' || isNaN(z)) {                 
@@ -152,7 +155,7 @@ COMMAND_REGISTRY.add(["pastenew","pn"], ["!pastenew z]: paste memory buffer inde
     }
 
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: paste 1 material only (default rock) buffer index z at point x.y (default 0 0)"], (player, z, mat, x, y) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
@@ -209,14 +212,14 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
     }
 
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["paste2weapon","pw"], ["!paste2weapon z n t]: paste memory buffer index z to a new weapon of type t with name n"], (player, z, n, t) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
         announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
         return false;
     }
-    if (!isBuild()) {
+    if (!isBuild() && !isPalette()) {
         announce("you can only paste while in build mode", player, COLORS.WARNING);
         return false;
     }
@@ -278,10 +281,10 @@ COMMAND_REGISTRY.add(["paste2weapon","pw"], ["!paste2weapon z n t]: paste memory
     }
 
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 COMMAND_REGISTRY.add(["paintbrush","pb"], ["!paintbrush c w h]: creates a paint brush of color c, width w and height h"], (player, c, w, h) => {
-    if (!isBuild()) {
+    if (!isBuild() && !isPalette()) {
         announce("you can only paste while in build mode", player, COLORS.WARNING);
         return false;
     }
@@ -311,40 +314,167 @@ COMMAND_REGISTRY.add(["paintbrush","pb"], ["!paintbrush c w h]: creates a paint 
     }
 
     return false;
-}, true);
-COMMAND_REGISTRY.add(["pencil","pe"], ["!pencil c w h]: creates a pencil of color c, width w and height h"], (player, c, w, h) => {
-    if (!isBuild()) {
-        announce("you can only paste while in build mode", player, COLORS.WARNING);
+},  COMMAND.ADMIN_ONLY);
+
+COMMAND_REGISTRY.add(["pencil","pe"], ["!pencil c d]: creates a pencil of color c, diameter d, you can chain multiple color separated by # 1#2#3"], (player, c, d) => {
+    if (!isBuild() && !isPalette()) {
+        announce("you can only create pencils while in build mode", player, COLORS.WARNING);
         return false;
     }
 
     let pa = auth.get(player.id)
-    if (typeof c == 'undefined' || isNaN(c) || c<0 || c>256) {
-        announce("you need to choose a color between 0 and 256 for the paint brush", player, COLORS.WARNING);
+    if (typeof c == 'undefined' || !/^((?<!\d)(?:1\d{2}|2[0-4]\d|[1-9]?\d|25[0-5])(?!\d)#)*(?<!\d)(?:1\d{2}|2[0-4]\d|[1-9]?\d|25[0-5])(?!\d)$/g.test(c)) {
+        announce("you need to choose a color between 0 and 256 for the pencil", player, COLORS.WARNING);
         return false;
     }
     if (pa!=null) {
     
         (async () => {
-            c = parseInt(c)
+           // c = parseInt(c)
 
-            if (typeof w == 'undefined' || isNaN(w)) {                 
-                w = '16'
-            }
-            if (typeof h == 'undefined' || isNaN(h)) {                 
-                h = w
+            if (typeof d == 'undefined' || isNaN(d)) {                 
+                d = '16'
             }
              
-            await builderfactory.add('pencil', null, {color:parseInt(c), width: parseInt(w), height: parseInt(h)});
-            announce(`new pencil added with color ${c}, width ${w}, and height ${h}`, null, COLORS.ANNOUNCE_BRIGHT);
+            await builderfactory.add('pencil', null, {color:c, width: parseInt(d), height: parseInt(d)});
+            announce(`new pencil added with color ${c}, diameter ${d}`, null, COLORS.ANNOUNCE_BRIGHT);
             setBuildMod()
         })()
         
     }
 
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
+COMMAND_REGISTRY.add(["girder","gr"], ["!girder c d]: creates a girder of color c, diameter d, you can chain multiple color separated by # 1#2#3"], (player, c, d) => {
+    if (!isBuild() && !isPalette()) {
+        announce("you can only create girders while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    if (typeof c == 'undefined' || !BuilderGirderRock.areAllowed(c)) {
+        announce("you need to choose at leaste one dirt or rock color for the girder", player, COLORS.WARNING);
+        return false;
+    }
+    if (pa!=null) {
+    
+        (async () => {
+           // c = parseInt(c)
+
+            if (typeof d == 'undefined' || isNaN(d)) {                 
+                d = '16'
+            }
+             
+            const ok = await builderfactory.add('girder', null, {colors:c, width: parseInt(d), height: parseInt(d)});
+            if (ok) {
+                announce(`new girder added with color ${c}, diameter ${d}`, null, COLORS.ANNOUNCE_BRIGHT);
+                setBuildMod()
+            } else {
+                announce(`an error happened while adding girder with color ${c}, diameter ${d}`, player, COLORS.ERROR);
+            }
+ 
+        })()
+        
+    }
+
+    return false;
+},  COMMAND.ADMIN_ONLY);
+
+COMMAND_REGISTRY.add(["dirtymissile","dm"], ["!dirtymissile c d]: creates a dirty missile of color c, diameter d, you can chain multiple color separated by # 1#2#3"], (player, c, d) => {
+    if (!isBuild() && !isPalette()) {
+        announce("you can only create dirtymissiles while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    // if (typeof c == 'undefined' || isNaN(c) || c<0 || c>256) {
+    //     announce("you need to choose a color between 0 and 256 for the paint brush", player, COLORS.WARNING);
+    //     return false;
+    // }
+    if (pa!=null) {
+    
+        (async () => {
+            if (typeof c == 'undefined') {
+                announce(`you need to pass at least one valid dirt color`, player, COLORS.ERROR);
+                return
+            }
+            let colors = c.split('#')
+            let rc = []
+            for (let cs of colors) {
+                if (isNaN(cs) || ![MATERIAL.DIRT, MATERIAL.DIRT_GREEN, MATERIAL.BG_DIRT, MATERIAL.DIRT_2].includes(defaultMaterials[cs])) {
+                    announce(`${cs} isn't a dirt color`, player, COLORS.WARNING);
+                    continue;
+                }
+                rc.push(parseInt(cs))
+            }
+
+            if (!rc.length) {
+                announce(`you need to pass at least one valid dirt color`, player, COLORS.ERROR);
+                return ;
+            }
+
+            if (typeof d == 'undefined' || isNaN(d)) {                 
+                d = 16
+            }
+
+             
+            await builderfactory.add('dm', null, {colors:rc, width: parseInt(d), height: parseInt(d)});
+            announce(`new dirtymissile added with color ${JSON.stringify(rc)}, diameter ${d}`, null, COLORS.ANNOUNCE_BRIGHT);
+            setBuildMod()
+        })()
+        
+    }
+
+    return false;
+},  COMMAND.ADMIN_ONLY);
+COMMAND_REGISTRY.add(["bigfiller","bf"], ["!bigfiller c]: creates a big filler of color c, you can chain multiple color separated by # 1#2#3"], (player, c) => {
+    if (!isBuild() && !isPalette()) {
+        announce("you can only create bigfiller while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+
+    let pa = auth.get(player.id)
+    // if (typeof c == 'undefined' || isNaN(c) || c<0 || c>256) {
+    //     announce("you need to choose a color between 0 and 256 for the paint brush", player, COLORS.WARNING);
+    //     return false;
+    // }
+    if (pa!=null) {
+    
+        (async () => {
+            if (typeof c == 'undefined') {
+                announce(`you need to pass at least one valid color btw 0 and 255`, player, COLORS.ERROR);
+                return
+            }
+            let colors = c.split('#')
+            let rc = []
+            for (let cs of colors) {
+                if (isNaN(cs) || cs<0 || cs>255/* || ![MATERIAL.DIRT, MATERIAL.DIRT_GREEN, MATERIAL.BG_DIRT, MATERIAL.DIRT_2].includes(defaultMaterials[cs])*/) {
+                    announce(`${cs} isn't a color`, player, COLORS.WARNING);
+                    continue;
+                }
+                rc.push(parseInt(cs))
+            }
+
+            if (!rc.length) {
+                announce(`you need to pass at least one valid color btw 0 and 255`, player, COLORS.ERROR);
+                return ;
+            }
+
+            if (typeof d == 'undefined' || isNaN(d)) {                 
+                d = 16
+            }
+
+             
+            await builderfactory.add('bf', null, {colors:rc, width: parseInt(d), height: parseInt(d)});
+            announce(`new bigfiller added with color ${JSON.stringify(rc)}`, null, COLORS.ANNOUNCE_BRIGHT);
+            setBuildMod()
+        })()
+        
+    }
+
+    return false;
+}, COMMAND.ADMIN_ONLY);
 function mergeMaps(map, mapIn, position, mat = false) {
     let maxOut = (wh, nwh, pos) => {
         let ret = wh

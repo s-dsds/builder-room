@@ -63,7 +63,7 @@ COMMAND_REGISTRY.add(["forceclear","fc"], ["!forceclear x y or !fc x y: reload a
         cleanMap();
     }    
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 //----- fight
 COMMAND_REGISTRY.add(["fight", "f"], ["!fight: starts the fight! / submit to voting if more than one player are active"], (player) => {
@@ -188,7 +188,7 @@ COMMAND_REGISTRY.add(["randommod","rm"], ["!randommod or !rm: switches to random
     }
     
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 
 COMMAND_REGISTRY.add(["forceundo","fu"], ["!forceundo #num or !fu #num: forces undo, use #num (not required) like `!fu 3` to go further back (num is from 1 to 24)"], (player, num)=> {
@@ -206,7 +206,7 @@ COMMAND_REGISTRY.add(["forceundo","fu"], ["!forceundo #num or !fu #num: forces u
     }
     votes.reset("undo");
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 var undoAsked = null;
 var startUndoTimeMS = null;
@@ -255,7 +255,7 @@ COMMAND_REGISTRY.add(["undo","u"], ["!undo #num or !u #num: forces undo, use #nu
     }    
     votes.reset("undo");
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 COMMAND_REGISTRY.add(["undolist","ul"], ["!undolist or !ul: lists currently available undos"], (player)=> {
     
@@ -270,7 +270,7 @@ COMMAND_REGISTRY.add(["undolist","ul"], ["!undolist or !ul: lists currently avai
         announce(`${idx} : ${l[k].time}`, player, COLORS.INFO, "small");
     }
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
 let lastSave = null
 COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #)"], (player, name)=> {
@@ -309,14 +309,69 @@ COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #
         announce("you just can't save maps all the time, please wait a bit", player, COLORS.WARNING);        
     }
     return false;
-}, false);
+},  COMMAND.FOR_ALL);
 
-COMMAND_REGISTRY.add(["reloadbuildercache","rbc"], ["!reloadbuildercache: reloads builder mod"], (player)=> {
-    builderfactory.buildBuilderMod('default', true);
+COMMAND_REGISTRY.add(["reloadbuildercache","rbc"], ["!reloadbuildercache #clear: reloads builder mod, if clear is provided, clears the custom elements too"], (player, reset)=> {
+    builderfactory.buildBuilderMod('default', true, typeof reset != 'undefined');
     return false;
-}, true);
+},  COMMAND.SUPER_ADMIN_ONLY);
 
 COMMAND_REGISTRY.add(["reloadmodlist","rml"], ["!reloadmodlist #clearcache: reloads mod list, if clearcache == 'clearcache' or 'cc' or 'true' also clears the cache for all mods"], (player, clearcache)=> {
     actualizeModList(clearcache=="true"||clearcache=="clearcache"||clearcache=="cc");
+    return false;
+},  COMMAND.SUPER_ADMIN_ONLY);
+
+COMMAND_REGISTRY.add(["addadmin","aa"], ["!addadmin #id: adds an admin"], (player, pid ="")=> {
+    pid = pid.replace("#","")
+    let p = window.WLROOM.getPlayer(parseInt(pid))
+    if (!p) {
+        announce(`player id ${pid} not found`)
+        return false
+    }
+    addAdmin(p)
+    window.WLROOM.setPlayerAdmin(parseInt(pid), true)
+    announce(`player ${p.name} as been added to the perm admin list`, null, COLORS.ANNOUNCE_BRIGHT)
+    return false;
+},  COMMAND.SUPER_ADMIN_ONLY);
+
+
+COMMAND_REGISTRY.add(["listadmins","la"], ["!listadmins: list all admins"], (player)=> {
+    for (const a of admins.values()) {
+        announce(`${a.name} ${a.auth} ${a.super?'(super admin)':''}`, player.id, COLORS.ANNOUNCE_BRIGHT)
+    }
+    return false;
+},  COMMAND.SUPER_ADMIN_ONLY);
+
+COMMAND_REGISTRY.add(["deladmin","da"], ["!deladmin #auth: removes an admin"], (player, a="")=> {
+    if (!isNaN(a.replace("#",""))) {
+        let pid = parseInt(a.replace("#",""))
+        let p = window.WLROOM.getPlayer(pid)
+        if (p) {
+            a = auth.get(p.id)        
+        }
+    }
+    if (!admins.get(a)) {
+        announce(`${a} is not perm admin`)
+        return false
+    }
+  
+    try {
+        const name = removeAdmin(a)
+        announce(`${name} as been removed from the perm admin list`, null, COLORS.ANNOUNCE_BRIGHT)
+    } catch(error) {
+        announce(`error removing ${a} from admin list`, player, COLORS.ERROR)
+        console.log(`------- error removing admin ${a} : ${error}`)
+    }    
+    
+    return false;
+},  COMMAND.SUPER_ADMIN_ONLY);
+
+
+COMMAND_REGISTRY.add(["palette","pal"], ["!palette or !pal: shows palette if in building mod"], (player)=> {
+    if (!isBuild()) {
+        announce("you can only undo while in build mode", player, COLORS.WARNING);
+        return false;
+    }
+    setPalettedMod();
     return false;
 }, true);

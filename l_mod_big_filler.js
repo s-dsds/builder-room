@@ -1,38 +1,31 @@
-weaponTypes.push('pencil');
-weaponTypes.push('p');
+weaponTypes.push('bigfiller');
+weaponTypes.push('bf');
 
 
-class BuilderPencil {
-    #name = 'PENCIL '
+class BuilderBigFiller {
+    #name = 'BF '
     #data = null
     #omod = null
     #colors = []    
-    constructor(pencil, data) {
-        this.#omod = new WLK_Mod(pencil.zip)        
+    constructor(dm, data) {
+        this.#omod = new WLK_Mod(dm.zip)        
         this.#name += data.name??""
-        if (typeof data.color != 'undefined') {
-            this.#name += `${data.color}`
+        if (typeof data.colors != 'undefined') {
+            this.#name += `${data.colors}`
         }
-        this.#data = data // {data:{width,height,data}} ||{color,width,height}
-        if (!isNaN(this.#data.color)) {
-            this.#colors.push(parseInt(this.#data.color))
-        } else if (this.#data.color.includes('#')) {
-            for (const c of this.#data.color.split('#')) {
-                if (!isNaN(c))
-                this.#colors.push(parseInt(c))
-            }
-        }        
+        this.#data = data // {data:{width,height,data}} ||{colors,width,height}
+        this.#colors = data.colors
     }
 
 
     toWLK_Mod = () => {        
-        const palette = this.#omod.sprites.list[2].palette
+        const palette = this.#omod.sprites.list[1].palette
         this.#omod.weapons.list[0].name = this.#name
         
         if (this.#isSprite()) {
             let sp = this.#getSprite(palette)
             this.#omod.add('spr', sp)
-            this.#omod.textures.list[2].sFrame = 22
+            this.#omod.textures.list[2].sFrame = 44
             // let sp2 = this.#genSprite(palette, 0, this.#data.width, this.#data.height)   
             // this.#omod.add('spr', sp2)
             // this.#omod.sObjects.list[0].startFrame = 23 
@@ -48,16 +41,16 @@ class BuilderPencil {
           //   this.#omod.textures.list[0].mFrame = 24   
         } else {
             
-            let sp2 = this.#genSprite(palette, 0, this.#data.width, this.#data.height)   
-            this.#omod.add('spr', sp2)
-            this.#omod.sObjects.list[0].startFrame = 22 
-            this.#omod.textures.list[0].sFrame = 22
-          //  this.#omod.textures.list[1].sFrame = 22
+            let sp2 = this.#genSprite(palette, 160, this.#data.width, this.#data.height)   
+            this.#omod.add('spr', sp2)        
+            this.#omod.textures.list[0].sFrame = 44
+            this.#omod.textures.list[1].sFrame = 44
+          
             let sp3 = this.#genCircle(palette, 6, this.#data.width)   
-            this.#omod.add('spr', sp3)
-            this.#omod.textures.list[2].mFrame = 23                                
-            this.#omod.textures.list[1].mFrame = 23                                
-            this.#omod.textures.list[0].mFrame = 23                                
+            this.#omod.add('spr', sp3)                                        
+            this.#omod.textures.list[0].mFrame = 45                                
+            this.#omod.textures.list[1].mFrame = 45                                
+            this.#omod.textures.list[2].mFrame = 45                                
                                             
             this.#omod.textures.list[1].rFrame = 1                                
             this.#omod.textures.list[0].rFrame = 1  
@@ -68,7 +61,7 @@ class BuilderPencil {
                 this.#omod.add('spr', sp)                
                 
             }
-            this.#omod.textures.list[2].sFrame = 24 // weird wlkit bug?
+            this.#omod.textures.list[2].sFrame = 46
             this.#omod.textures.list[2].rFrame = this.#colors.length            
                                      
         }
@@ -150,8 +143,7 @@ class BuilderPencil {
     #cleanup = () => {        
         const w = this.#data.width
         const h = this.#data.height
-        const tobereplacedMat = [MATERIAL.BG, MATERIAL.BG_SEESHADOW, MATERIAL.BG_DIRT, MATERIAL.BG_DIRT_2]
-        console.log("jjjjjjjjjjjjjjj", JSON.stringify(Object.keys(this.#data)))
+        const tobereplacedMat = [MATERIAL.BG, MATERIAL.BG_SEESHADOW, MATERIAL.BG_DIRT, MATERIAL.BG_DIRT_2]        
         let ret = this.#data.data.slice(0); // copy
         console.log('cl ret typeof', typeof ret, ret.length, w*h)
         for (let j = 0; j < h; j++) {

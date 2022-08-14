@@ -1,38 +1,57 @@
-weaponTypes.push('pencil');
-weaponTypes.push('p');
+weaponTypes.push('girder');
+weaponTypes.push('gr');
 
 
-class BuilderPencil {
-    #name = 'PENCIL '
+class BuilderGirderRock {
+    #name = 'GR '
     #data = null
     #omod = null
-    #colors = []    
-    constructor(pencil, data) {
-        this.#omod = new WLK_Mod(pencil.zip)        
-        this.#name += data.name??""
-        if (typeof data.color != 'undefined') {
-            this.#name += `${data.color}`
+    #colors = []  
+    static allowed =   [MATERIAL.ROCK,MATERIAL.DIRT,MATERIAL.DIRT_2]
+    static isAllowed = (c) => this.allowed.includes(defaultMaterials[c]);
+    static areAllowed = (cc) => {
+            let ccc = []
+            for (const c of cc.split('#')) {
+                if (!isNaN(c)) {
+                    if (this.isAllowed(c)) {
+                        ccc.push(c)
+                    }
+                
+            }           
+            return (ccc.length>0)                     
         }
-        this.#data = data // {data:{width,height,data}} ||{color,width,height}
-        if (!isNaN(this.#data.color)) {
-            this.#colors.push(parseInt(this.#data.color))
-        } else if (this.#data.color.includes('#')) {
-            for (const c of this.#data.color.split('#')) {
-                if (!isNaN(c))
-                this.#colors.push(parseInt(c))
-            }
-        }        
     }
 
+    constructor(dm, data) {
+        this.#omod = new WLK_Mod(dm.zip)        
+        this.#name += data.name??""
+        if (typeof data.colors != 'undefined') {
+            this.#name += `${data.colors}`
+        }
+        this.#data = data // {data:{width,height,data}} ||{colors,width,height}
+        if (typeof data.colors!='undefined') {
+            for (const c of data.colors.split('#')) {
+                if (!isNaN(c)) {
+                    let cc = parseInt(c)
+                    if (BuilderGirderRock.isAllowed(cc)) {
+                        this.#colors.push(cc)
+                    }
+                }
+            }   
+            if (this.#colors.length==0) {
+                throw 'no dirt or rock'
+            }             
+        }
+    }    
 
     toWLK_Mod = () => {        
-        const palette = this.#omod.sprites.list[2].palette
+        const palette = this.#omod.sprites.list[1].palette
         this.#omod.weapons.list[0].name = this.#name
         
         if (this.#isSprite()) {
             let sp = this.#getSprite(palette)
             this.#omod.add('spr', sp)
-            this.#omod.textures.list[2].sFrame = 22
+            this.#omod.textures.list[0].sFrame = 9
             // let sp2 = this.#genSprite(palette, 0, this.#data.width, this.#data.height)   
             // this.#omod.add('spr', sp2)
             // this.#omod.sObjects.list[0].startFrame = 23 
@@ -47,20 +66,10 @@ class BuilderPencil {
 
           //   this.#omod.textures.list[0].mFrame = 24   
         } else {
-            
-            let sp2 = this.#genSprite(palette, 0, this.#data.width, this.#data.height)   
-            this.#omod.add('spr', sp2)
-            this.#omod.sObjects.list[0].startFrame = 22 
-            this.#omod.textures.list[0].sFrame = 22
-          //  this.#omod.textures.list[1].sFrame = 22
+          
             let sp3 = this.#genCircle(palette, 6, this.#data.width)   
-            this.#omod.add('spr', sp3)
-            this.#omod.textures.list[2].mFrame = 23                                
-            this.#omod.textures.list[1].mFrame = 23                                
-            this.#omod.textures.list[0].mFrame = 23                                
-                                            
-            this.#omod.textures.list[1].rFrame = 1                                
-            this.#omod.textures.list[0].rFrame = 1  
+            this.#omod.add('spr', sp3)                                        
+            this.#omod.textures.list[0].mFrame = 9                                                               
 
             for (let cid in this.#colors) {
                 let c = this.#colors[cid]
@@ -68,8 +77,8 @@ class BuilderPencil {
                 this.#omod.add('spr', sp)                
                 
             }
-            this.#omod.textures.list[2].sFrame = 24 // weird wlkit bug?
-            this.#omod.textures.list[2].rFrame = this.#colors.length            
+            this.#omod.textures.list[0].sFrame = 10
+            this.#omod.textures.list[0].rFrame = this.#colors.length            
                                      
         }
 
@@ -150,14 +159,26 @@ class BuilderPencil {
     #cleanup = () => {        
         const w = this.#data.width
         const h = this.#data.height
-        const tobereplacedMat = [MATERIAL.BG, MATERIAL.BG_SEESHADOW, MATERIAL.BG_DIRT, MATERIAL.BG_DIRT_2]
-        console.log("jjjjjjjjjjjjjjj", JSON.stringify(Object.keys(this.#data)))
+        let bestMatches = {}   
+        const getBestMatch = (c) => {
+            if (typeof bestMatches[c] != 'undefined') {
+                return bestMatches[c]
+            }
+            let r = c            
+            while (!BuilderGirderRock.isAllowed(r)) {
+                r -=  3
+                if (r<0) r=255
+            }
+            bestMatches[c]=r
+            return r
+        }        
         let ret = this.#data.data.slice(0); // copy
         console.log('cl ret typeof', typeof ret, ret.length, w*h)
         for (let j = 0; j < h; j++) {
             for (let i = 0; i < w; i++) {
-                if (tobereplacedMat.includes(defaultMaterials[this.#data.data[(j * w) + i]])) {
-                    ret[(j * w) + i] = 0
+                let curr_c = this.#data.data[(j * w) + i]
+                if (!BuilderGirderRock.isAllowed(curr_c)) {
+                    ret[(j * w) + i] = getBestMatch(curr_c)
                 }
             }
         }

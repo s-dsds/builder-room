@@ -1,16 +1,16 @@
 weaponTypes.push('paintbrush');
-weaponTypes.push('p');
+weaponTypes.push('pb');
 
 
 class BuilderPaintbrush {
-    #name = 'paintbrush'
+    #name = 'PAINT BRUSH '
     #data = null
     #omod = null
     constructor(paintbrush, data) {
         this.#omod = new WLK_Mod(paintbrush.zip)        
-        this.#name = data.name??"PAINT BRUSH"
+        this.#name += data.name??""
         if (typeof data.color != 'undefined') {
-            this.#name += ` ${data.color}`
+            this.#name += `${data.color}`
         }
         this.#data = data // {data:{width,height,data}} ||{color,width,height}
     }

@@ -4,6 +4,8 @@ var notifsRef;
 //var modsRef;
 var loginsRef;
 var statsRef;
+var adminsRef;
+var admins = new Map();
 
 function initFirebase() {
     async function load_scripts(script_urls) {
@@ -42,6 +44,11 @@ function initFirebase() {
         notifsRef = fdb.ref('bg/notifs');
       //  modsRef = fdb.ref('bg/mods');
         loginsRef = fdb.ref('bg/logins');
+
+        adminsRef = fdb.ref(`bg/admins`);
+
+        listenForAdminsEvents();
+
 		console.log('firebase ok');
 		//loadExistingMods();
 		//listenForModsEvents();        
@@ -87,4 +94,51 @@ function writeLog(p, msg) {
 function writeGameStats(event, stats) {
   const now = Date.now();
   statsRef.child(now).set({event: event, stats:stats});
+}
+
+function listenForAdminsEvents() {
+    adminsRef.on('child_added', loadnewAdmin);
+    adminsRef.on('child_changed', loadnewAdmin);
+}
+
+function loadnewAdmin(childSnapshot) {
+	var v = childSnapshot.val();
+	var k = childSnapshot.key;
+
+  loadAdmin(k,v);
+  
+  console.log("admin `"+k+"`: `"+v.name+"` has been added to memory");
+  notifyAdmins("admin `"+k+"`: `"+v.name+"` has been added to memory");
+}
+
+function loadAdmin(id, json) {
+    admins.set(id, {
+        auth: id,
+        name: json.name,
+        super: typeof json.super != 'undefined' && json.super
+    } );
+}
+
+function isSuperAdmin(player) {
+    let a = auth.get(player.id)
+    let p = admins.get(a)
+    return p && p.super
+}
+
+function addAdmin(player) {
+    let a = auth.get(player.id)
+    adminsRef.child(a).set({name: player.name})
+}
+
+function removeAdmin(a) {    
+    let p = admins.get(a)
+    let curr_pid = getPlayerIdFromAuth(a)
+    if (curr_pid) {
+        window.WLROOM.setPlayerAdmin(curr_pid, false)
+    }
+    
+    const name = p.name
+    adminsRef.child(a).remove()
+    admins.delete(a)
+    return name
 }

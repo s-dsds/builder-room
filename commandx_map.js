@@ -20,7 +20,7 @@ COMMAND_REGISTRY.add("fx", ["!fx effect1 effect2: adds fx to the current map, ap
     }  
     loadEffects(fxs);
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 function loadEffects(fxs, data) {
     console.log("loading effects", JSON.stringify(fxs));

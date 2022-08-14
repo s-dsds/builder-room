@@ -70,6 +70,7 @@ var UNDO_HISTORY = (function () {
     }
 
     const onEnd = () => {
+        console.log('============---endgame-------------------')
         if ((!hasActivePlayers() || !isBuild()) && intervalID!=null) {
             if (isBuild()) {
                 pushStep();
@@ -120,5 +121,6 @@ var UNDO_HISTORY = (function () {
         getStep: getStep,
         isRunning: () => (intervalID!=null),
         list: getSteps,
+        pushStep:pushStep
     }
 })()

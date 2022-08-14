@@ -58,15 +58,41 @@ function reload() {
 function setBuildMod() {
 	console.log("set build");
     (async () => {
+        if (isPalette()) {
+            var undo = UNDO_HISTORY.getStep(1);
+            if (undo != null) {              
+                loadLev(undo.level);                
+            }
+        }
         let mod = await builderfactory.getMod();
         window.WLROOM.loadMod(mod.zip);
         var sett = window.WLROOM.getSettings();
         sett.timeLimit = 0;
         sett.scoreLimit = 999;
+        sett.bonusDrops = 'none'
         window.WLROOM.setSettings(sett);
         currState=BUILDING_STATE;
         votes.reset();
         window.WLROOM.restartGame();
+    })()
+}
+
+function setPalettedMod() {
+	console.log("set palette");
+    (async () => {        
+        if (isBuild()) {
+            UNDO_HISTORY.pushStep();
+        }        
+        let mod = await builderfactory.getMod();
+        window.WLROOM.loadMod(mod.zip);
+        var sett = window.WLROOM.getSettings();
+        sett.timeLimit = 0;
+        sett.scoreLimit = 999;
+        sett.bonusDrops = 'none'
+        window.WLROOM.setSettings(sett);
+        currState=PALETTE_STATE;
+        votes.reset();
+        loadMapByName("bg/palette.png");
     })()
 }
 

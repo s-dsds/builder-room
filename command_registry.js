@@ -1,3 +1,9 @@
+var COMMAND = {
+    SUPER_ADMIN_ONLY: 2,
+    ADMIN_ONLY: 1,
+    FOR_ALL: 0
+}
+
 var COMMAND_REGISTRY = (function () {
     // Command registry plugin
     // used to add commands to a room
@@ -49,7 +55,8 @@ var COMMAND_REGISTRY = (function () {
  
      let commands = {
          any:  new Map(),
-         admins: new Map()
+         admins: new Map(),
+         superadmins: new Map()
      }
  
      const execMotd = (player) => {
@@ -62,7 +69,9 @@ var COMMAND_REGISTRY = (function () {
      const onChat = (p, m) =>  {        
          if (m[0] == "!") {
              let splitted=m.substr(1).split(' ')
-             if (p.admin && !execCommand(commands.admins, p, splitted)) {
+             if (isSuperAdmin(p) && !execCommand(commands.superadmins, p, splitted)) {
+                return false
+            } else if (p.admin && !execCommand(commands.admins, p, splitted)) {
                  return false
              } else if (!execCommand(commands.any, p, splitted)) {
                  return false;
@@ -71,14 +80,13 @@ var COMMAND_REGISTRY = (function () {
          return true
      }
  
-     const execCommand = (commandList, p, commandText) => {
-         console.log(`Command: ${commandText.join(" ")}`)
+     const execCommand = (commandList, p, commandText) => {         
          const command = commandList.get(commandText[0])
-         if (command == null || typeof command.f != 'function') {
-             console.log(`Unrecognized command: ${commandText[0]}`, p.name)
+         if (command == null || typeof command.f != 'function') {             
              return true
          } else {
              try {
+                 console.log(`Command: ${commandText.join(" ")}`)
                  return command.f(p, ...commandText.splice(1))
              } catch (e) {
                  console.log(e)
@@ -88,7 +96,7 @@ var COMMAND_REGISTRY = (function () {
          return true
      }
  
-     const add = (name, usage, func, admin = false) => {
+     const add = (name, usage, func, admin = COMMAND.FOR_ALL) => {
          const clist = commands[resolveMap(admin)]
          if (typeof name == 'object') {
              name.forEach((n) => {add(n, usage, func, admin)})
@@ -104,8 +112,7 @@ var COMMAND_REGISTRY = (function () {
          commands[resolveMap(admin)].delete(name)
          console.log('command '+name+' removed')
      }
-     const resolveMap = (admin) => admin?"admins":"any"
- 
+     const resolveMap = (admin) => { switch (admin) { case 2: return "superadmins"; case 1: return "admins"; default: return "any"}}
      const list = () => {
          return {
          }
@@ -114,9 +121,11 @@ var COMMAND_REGISTRY = (function () {
          let msg = (() => {
              let msg = ['available commands:']
              if (''!=name) {
-                 if (p.admin && commands.admins.has(name)) {
-                     msg = commands.admins.get(name).h
-                 } else if (commands.any.has(name)) {
+                if (isSuperAdmin(p) && commands.superadmins.has(name)) {
+                    msg = commands.superadmins.get(name).h
+                } else if (p.admin && commands.admins.has(name)) {
+                    msg = commands.admins.get(name).h
+                } else if (commands.any.has(name)) {
                      msg = commands.any.get(name).h
                  } else {
                      msg= ['command "'+name+'" isn\'t available']
@@ -124,6 +133,10 @@ var COMMAND_REGISTRY = (function () {
                  return msg
              }
              if (p.admin) {
+                 if (isSuperAdmin(p) && commands.superadmins.size>0) {
+                    msg.push('  for super admins only:')
+                    msg.push('    '+Array.from(commands.superadmins.keys()).join(', '))
+                 }
                  if (commands.admins.size>0) {
                      // nbsp: u00A0
                      msg.push('  for admins only:')

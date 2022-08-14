@@ -1,5 +1,3 @@
-var admins = new Set(CONFIG.admins);
-
 let auth = new Map();
 var fdb;
 
@@ -37,4 +35,13 @@ var initstate = [];
 
 function printInitDone() {
     console.log(JSON.stringify(initstate))
+}
+
+function getPlayerIdFromAuth(a) {
+    for (const [k,p] of auth) {
+        if (p==a) {
+            return k
+        }
+    }
+    return null
 }

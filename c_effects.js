@@ -449,6 +449,57 @@ var effects = {
             data:ret
         }
     },
+    borderize: function (map, replacewithcolor=29, pixelx=1, pixely=1, mat='rock', withmat='bg')  /* adds a border between materials (defaults to rock & bg) */  {
+        let ret = map.data.slice(0); //copy
+
+        pixelx = parseInt(pixelx);
+        pixelx = isNaN(pixelx) ? 0 : pixelx
+        pixelx = pixelx > 40 ? 40 : pixelx
+
+        pixely = parseInt(pixely);
+        pixely = isNaN(pixely) ? 0 : pixely
+        pixely = pixely > 40 ? 40 : pixely
+
+        let color = parseInt(replacewithcolor)
+        color = isNaN(color) || replacewithcolor===null || color > 255 || color < 0? 29 : color
+
+        if (typeof MAT_GROUP[mat] == 'undefined') {
+            mat = withmat=='rock'?'bg':'rock'
+        }
+        if (typeof MAT_GROUP[withmat] == 'undefined' || mat==withmat ) {
+            withmat = mat=='rock'?'bg':'rock'
+        }
+        const is_next_to_other_mat = (j,i) => {
+            for (let jj = j-pixely; (jj < map.height) && (jj <= j+pixely); jj++) {
+                for (let ii = i-pixelx; (ii < map.width) && (ii <= i+pixelx); ii++) {
+                    if ((jj==j && ii==i) || (jj<0 || ii<0)) continue;
+                    if (MAT_GROUP[withmat].includes(defaultMaterials[map.data[(jj*map.width)+ii]])) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        for (let j = 0; j < map.height; j++) {            
+            for (let i = 0; i<map.width; i++) {
+                let curr_idx = (j*map.width)+i
+                let curr_c =map.data[curr_idx];
+                let curr_mat = defaultMaterials[curr_c]
+                if (MAT_GROUP[mat].includes(curr_mat) && is_next_to_other_mat(j, i)) {
+                    ret[curr_idx] = color
+                }
+                
+
+            }            
+        }
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
     fillgaps: function (map, colornum=null, pixel=0 /* number of pixels added to the thresolds | x y thresolds are 3x7 by default */) /* tries filling gaps with random rock */ {   
         pixel = parseInt(pixel)
         pixel = isNaN(pixel) ? 0 : pixel

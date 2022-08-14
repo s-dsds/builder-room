@@ -3,6 +3,7 @@ class ModCache_Entry {
     constructor(zip, mod) {
         this.zip=zip
         this.wlk=mod
+        this.name=this.wlk.config.name
     }
     static fromZip(zip, soundpack) {
         let mod = new WLK_Mod(zip) 

@@ -30,12 +30,19 @@ class BuilderMod {
             let elpromises = []
     
             for (const element of elements) {
+              //  if (["elements/line marker.zip", "elements/dirt filler.zip", "elements/for rysiek.zip", "elements/spray.zip"].includes(element)) continue
                 elpromises.push(this.getMod(element, force))            
             }
 
             let ellist = await Promise.all(elpromises)
             for (const el of ellist) {    
-                bmod = this.mergeMods(bmod, new WLK_Mod(el.zip))
+                try {
+                    bmod = this.mergeMods(bmod, new WLK_Mod(el.zip))
+                } catch (err) {
+                    console.log(`-----error merging ${el.name}`)
+                    console.log(err)
+                }
+                
             }
 
             this.cache.set('base_merged', bmod)
@@ -43,7 +50,11 @@ class BuilderMod {
         return this.cache.get('base_merged')
     }
     
-    async buildBuilderMod(name='default', force = false) {
+    async buildBuilderMod(name='default', force = false, clearCustom = false) {
+        if (clearCustom) {
+            this.clearCustomElements()
+        }
+        
         let bmod = await this.buildBaseWithElements(force)
         
         let wlist = await (async () => {
@@ -88,6 +99,10 @@ class BuilderMod {
         const notif = `- builder mod ${name} merged `+(force?"(clearcache forced) ":"")+`-`
         console.log(notif)
         if (typeof notifyAdmins =='function') notifyAdmins(notif, true)
+    }
+
+    clearCustomElements() {
+        this.#custom = []
     }
 
     mergeMods(base, toMerge) {
@@ -142,29 +157,54 @@ class BuilderMod {
         let brickmod = await this.getMod('templates/brick')        
         let paintbrush = await this.getMod('templates/paint brush')        
         let pencil = await this.getMod('elements/pencil')        
+        let dirtymiss = await this.getMod('elements/dirty missile')     
+        let bigfill = await this.getMod('elements/big filler')     
+        let griderr = await this.getMod('elements/w_girder_rock')     
 
-        for (let cust of this.#custom) {         
-            switch (cust.type) {
-                case 'brick':
-                case 'b':
-                    let bb = new BuilderBrick(brickmod, {name:cust.name, png:{image:cust.data.data,width:cust.data.width,height:cust.data.height}})
-                    cb = this.mergeMods(cb, bb.toWLK_Mod())
-                    break;
-                case 'paintbrush':
-                case 'pb':
-                    let pb = new BuilderPaintbrush(paintbrush, cust.data)
-                    cb = this.mergeMods(cb, pb.toWLK_Mod())
-                    break;
-                case 'pencil':
-                case 'p':
-                    let pen = new BuilderPencil(pencil, cust.data)
-                    cb = this.mergeMods(cb, pen.toWLK_Mod())
-                    break;
-            }       
-            
+        
+        for (let idx in this.#custom) {  
+            let cust = this.#custom[idx]
+            try {     
+                switch (cust.type) {
+                    case 'brick':
+                    case 'b':
+                        let bb = new BuilderBrick(brickmod, {name:cust.name, png:{image:cust.data.data,width:cust.data.width,height:cust.data.height}})
+                        cb = this.mergeMods(cb, bb.toWLK_Mod())
+                        break;
+                    case 'paintbrush':
+                    case 'pb':
+                        let pb = new BuilderPaintbrush(paintbrush, cust.data)
+                        cb = this.mergeMods(cb, pb.toWLK_Mod())
+                        break;
+                    case 'pencil':
+                    case 'p':
+                        let pen = new BuilderPencil(pencil, cust.data)
+                        cb = this.mergeMods(cb, pen.toWLK_Mod())
+                        break;
+                    case 'dirtymissile':
+                    case 'dm':
+                        let dm = new BuilderDirtyM(dirtymiss, cust.data)
+                        cb = this.mergeMods(cb, dm.toWLK_Mod())
+                        break;
+                    case 'bigfiller':
+                    case 'bf':
+                        let bf = new BuilderBigFiller(bigfill, cust.data)
+                        cb = this.mergeMods(cb, bf.toWLK_Mod())
+                        break;
+                    case 'girder':
+                    case 'gr':
+                        let gr = new BuilderGirderRock(griderr, cust.data)
+                        cb = this.mergeMods(cb, gr.toWLK_Mod())
+                        break;
+                }       
+            } catch (err) {
+                console.log(`--something went wrong while creating ${cust.type} ${err}`)
+                this.#custom.splice(idx, 1)
+                return false
+            }
         }
         this.cache.set(currentBuilder, ModCache_Entry.fromWlk(cb))
-   
+        return true
     }
 }
 
