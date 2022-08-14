@@ -16,7 +16,7 @@ class BuilderPencil {
         this.#data = data // {data:{width,height,data}} ||{color,width,height}
         if (!isNaN(this.#data.color)) {
             this.#colors.push(parseInt(this.#data.color))
-        } else if (this.#data.color.includes('#')) {
+        } else if (this.#data.color && this.#data.color.includes('#')) {
             for (const c of this.#data.color.split('#')) {
                 if (!isNaN(c))
                 this.#colors.push(parseInt(c))
