@@ -214,7 +214,7 @@ COMMAND_REGISTRY.add(["pastemat","pm"], ["!pastemat z [rock|undef|dirt|bg] x y: 
     return false;
 },  COMMAND.FOR_ALL);
 
-COMMAND_REGISTRY.add(["paste2weapon","pw"], ["!paste2weapon z n t]: paste memory buffer index z to a new weapon of type t with name n"], (player, z, n, t) => {
+COMMAND_REGISTRY.add(["paste2weapon","pw"], ["!paste2weapon z n t: paste memory buffer index z to a new weapon of type t with name n","available weapontypes: bigfiller (bf), brick (b), dirtymissile (dm), girder(gr), paintbrush (pb), pencil (p)"], (player, z, n, t) => {
     if (typeof __commitLevel != "function" || typeof window.REF_ROOM_STATE == "undefined") {
         announce("paste doesn't work at the moment, please ask an admin", player, COLORS.ERROR);
         return false;
