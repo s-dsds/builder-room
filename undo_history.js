@@ -24,7 +24,7 @@ var UNDO_HISTORY = (function () {
     }
     let room = null
     let settings = {
-        maxSteps: 24,
+        maxSteps: 50,
         frequency: 10 // in seconds
     } //default settings
 

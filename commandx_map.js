@@ -18,6 +18,7 @@ COMMAND_REGISTRY.add("fx", ["!fx effect1 effect2: adds fx to the current map, ap
     if (fxs.length==0) {
         fxs.push(Math.floor(Math.random() * effectList.length));
     }  
+    UNDO_HISTORY.pushStep()
     loadEffects(fxs);
     return false;
 },  COMMAND.ADMIN_ONLY);
@@ -39,6 +40,7 @@ function loadEffects(fxs, data) {
                 data = effects[fx](data, ...all);
             }
             loadLev(data);
+            announce("!fx "+fxs.join(" "), nil, COLORS.WARNING, "bold")
         } catch(e) {
             console.log("error while applying effects", e)
         }

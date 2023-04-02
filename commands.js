@@ -45,15 +45,19 @@ COMMAND_REGISTRY.add(["clear", "c"], ["!clear or !c: reload a clean map / submit
         announce("current required vote count is: `"+requiredVoteCount() + "` current votes: `"+votes.count("clear")+"`", null, COLORS.INFO, "italic");
         return false;
     }
+    UNDO_HISTORY.pushStep()
     cleanMap();
     return false;
 }, false);
 
-COMMAND_REGISTRY.add(["forceclear","fc"], ["!forceclear x y or !fc x y: reload a clean map, if passed x && y params it will change the size of the map"], (player, x, y)=> {
+COMMAND_REGISTRY.add(["forceclear","fc"], ["!forceclear x y options or !fc x y fxs : reload a clean map, if passed x && y params it will change the size of the map, fxs only when passing x y"], (player, x, y, ...options)=> {
+    UNDO_HISTORY.pushStep()
     if (x && y) {
         x = x >=maxMaxWidthHeight?maxMaxWidthHeight:parseInt(x);
         y = y >=maxMaxWidthHeight?maxMaxWidthHeight:parseInt(y);
-        loadEffects(["fillbg", "border"], {
+        let fxs = options??[]
+        fxs.unshift("fillbg")
+        loadEffects(fxs, {
             name: `empty map of ${x} per ${y}`,
             data: [], 
             width: x,
@@ -90,7 +94,7 @@ COMMAND_REGISTRY.add(["fight", "f"], ["!fight: starts the fight! / submit to vot
 COMMAND_REGISTRY.add(["forcefight","ff"], ["!forcefight: starts the fight!"], (player)=> {
     setFight();
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 //----- build
 COMMAND_REGISTRY.add(["build","b"], ["!build or !b: start building the map / submit to voting if more than one player are active"], (player) => {
     if (isBuild()) {
@@ -116,7 +120,7 @@ COMMAND_REGISTRY.add(["build","b"], ["!build or !b: start building the map / sub
 COMMAND_REGISTRY.add(["forcebuild","fb"], ["!forcebuild or !fb: start building the map"], (player)=> {
     setBuildMod();
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 COMMAND_REGISTRY.add(["mapinfo","mf"], ["!mapinfo or !mf: information on the map"], (player)=> {
     let lev = getCurrentLevelCopy();
@@ -141,7 +145,7 @@ COMMAND_REGISTRY.add("mod", ["!mod xxx: sets current fighting mod, lists mods if
    
     printCurrentMod('current fight mod set to ', null, COLORS.ANNOUNCE_BRIGHT)    
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);
 
 function moveToGame(player) {
     window.WLROOM.setPlayerTeam(player.id, 1);
@@ -311,6 +315,11 @@ COMMAND_REGISTRY.add("save", ["!save #name: saves current map with #name (omit #
     return false;
 },  COMMAND.FOR_ALL);
 
+COMMAND_REGISTRY.add(["sync"], ["!sync: synchronizes map list"], (player, reset)=> {
+    actualizeMapList()
+    return false;
+},  COMMAND.SUPER_ADMIN_ONLY);
+
 COMMAND_REGISTRY.add(["reloadbuildercache","rbc"], ["!reloadbuildercache #clear: reloads builder mod, if clear is provided, clears the custom elements too"], (player, reset)=> {
     builderfactory.buildBuilderMod('default', true, typeof reset != 'undefined');
     return false;
@@ -374,4 +383,4 @@ COMMAND_REGISTRY.add(["palette","pal"], ["!palette or !pal: shows palette if in 
     }
     setPalettedMod();
     return false;
-}, true);
+},  COMMAND.ADMIN_ONLY);

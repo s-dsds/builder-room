@@ -449,6 +449,98 @@ var effects = {
             data:ret
         }
     },
+    borderizex: function (map, colortop=29, colorright=29, colorbott=19, colorleft=19, pixeltop=1, pixelright=1, pixelbott=1, pixelleft=1, mat='rock', withmat='bg')  /* adds a border between materials (defaults to rock & bg) */  {
+        let ret = map.data.slice(0); //copy
+
+        for (const idx in ['colortop', 'colorright', 'colorbott', 'colorleft']) {
+            const ai = 1*idx+1
+            let color = arguments[ai]
+            color = parseInt(color);
+            arguments[ai] = isNaN(color) || arguments[ai]===null || color > 255 || color < 0? 29 : color
+        }
+
+
+        for (const idx in ['pixeltop', 'pixelright', 'pixelleft', 'pixelbott']) {
+            const ai = 1*idx+5
+            let pixel = parseInt(arguments[ai]);
+            pixel = isNaN(pixel) ? 0 : pixel
+            pixel = pixel > 40 ? 40 : pixel
+            arguments[ai] = pixel
+        }
+
+        if (typeof MAT_GROUP[mat] == 'undefined') {
+            mat = withmat=='rock'?'bg':'rock'
+        }
+        if (typeof MAT_GROUP[withmat] == 'undefined' || mat==withmat ) {
+            withmat = mat=='rock'?'bg':'rock'
+        }
+       
+        const top = 1;
+        const right = 2;
+        const bottom = 3;
+        const left = 4;
+  
+        const is_next_to_other_mat = (j,i) => {    
+            if (pixelbott)
+            for (let jj = j; (jj <= j+(1*pixelbott)); jj++) {                
+                if (MAT_GROUP[withmat].includes(defaultMaterials[map.data[(jj*map.width)+i]])) {            
+                   return bottom
+                }
+            } 
+            if (pixelright)
+            for (let ii = i+1; (ii <= i+(1*pixelright)); ii++) {
+                if (MAT_GROUP[withmat].includes(defaultMaterials[map.data[(j*map.width)+ii]])) {                   
+                    return right
+                }
+            }
+            if (pixeltop)
+            for (let jj = j-(1*pixeltop); (jj < j); jj++) {                
+                if (MAT_GROUP[withmat].includes(defaultMaterials[map.data[(jj*map.width)+i]])) {
+                    return top
+                }
+            } 
+            if (pixelleft)
+            for (let ii = i-1; (ii >= i-(1*pixelleft)); ii--) {
+                if (MAT_GROUP[withmat].includes(defaultMaterials[map.data[(j*map.width)+ii]])) {
+                    return left
+                }
+            }         
+            return -1;
+        }
+        
+        for (let j = 0; j < map.height; j++) {            
+            for (let i = 0; i<map.width; i++) {
+                let curr_idx = (j*map.width)+i
+                let curr_c =map.data[curr_idx];
+                let curr_mat = defaultMaterials[curr_c]
+                if (MAT_GROUP[mat].includes(curr_mat)) {
+                    let dir = is_next_to_other_mat(j, i)
+                    if (dir>0) {
+                        switch (dir) {
+                            case top:
+                                ret[curr_idx] = colortop;
+                            break;
+                            case right:
+                                ret[curr_idx] = colorright;
+                            break;
+                            case bottom:
+                                ret[curr_idx] = colorbott;
+                            break;
+                            case left:
+                                ret[curr_idx] = colorleft;
+                            break;
+                        }
+                    }                   
+                }
+            }            
+        }
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
+            data:ret
+        }
+    },
     borderize: function (map, replacewithcolor=29, pixelx=1, pixely=1, mat='rock', withmat='bg')  /* adds a border between materials (defaults to rock & bg) */  {
         let ret = map.data.slice(0); //copy
 
@@ -707,6 +799,27 @@ var effects = {
             name: map.name,
             width:newWidth,
             height:newHeight,
+            data:ret
+        }      
+    },
+    grid: function (map,x=50, y=50, color=6)  /* draws a grid on top of the map x y & zx zy */ {
+        let ret = map.data.slice(0); //copy
+        for (let j = 0; j < map.height; j++) {            
+            for (let i = 0; i<map.width; i++) {
+                let curr_idx = (j*map.width)+i
+                let curr_c =map.data[curr_idx];
+               
+                if (i%x==0 || j %y==0) {
+                    ret[curr_idx] = color
+                }
+                
+
+            }            
+        }
+        return { 
+            name: map.name,
+            width:map.width,
+            height:map.height,
             data:ret
         }      
     },

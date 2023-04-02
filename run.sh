@@ -11,6 +11,7 @@ echo $WLEXEC
 if [[ $3 == "reload" ]]; then
     wget https://www.vgm-quiz.com/dev/webliero/wledit/wlkit.js -O _wlkit.js
     wget https://www.vgm-quiz.com/dev/webliero/wledit/hjson.min.js -O _hjson.js
+    wget https://ext-proxy.fly.dev/static/js/jszip.min.js -O __0_jszip.js
 fi
 
 $WLEXEC stop $1

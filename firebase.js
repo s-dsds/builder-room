@@ -1,7 +1,6 @@
 var fdb;
 var commentsRef;
 var notifsRef;
-//var modsRef;
 var loginsRef;
 var statsRef;
 var adminsRef;
@@ -42,44 +41,17 @@ function initFirebase() {
 		fdb = firebase.database();
 		commentsRef = fdb.ref('bg/comments');
         notifsRef = fdb.ref('bg/notifs');
-      //  modsRef = fdb.ref('bg/mods');
+
         loginsRef = fdb.ref('bg/logins');
 
         adminsRef = fdb.ref(`bg/admins`);
 
         listenForAdminsEvents();
 
-		console.log('firebase ok');
-		//loadExistingMods();
-		//listenForModsEvents();        
+		console.log('firebase ok');        
         initstate.push('firebase ok')
 	})();		
 }
-
-/*
-function listenForModsEvents() {
-    modsRef.on('child_added', addNewMod);
-    modsRef.on('child_changed', addNewMod);
-}
-
-function addNewMod(childSnapshot) {
-	var v = childSnapshot.val();
-	var k = childSnapshot.key;
-
-  addMod(k,v);
-  if (k!="build") {
-    currMod = k;
-  }
-  
-  console.log("mod `"+k+"`: `"+v.name+"` v `"+v.version+"` has been added to memory");
-  notifyAdmins("mod `"+k+"`: `"+v.name+"` v `"+v.version+"` has been added to memory");
-}
-
-function loadExistingMods() {
-    modsRef.orderByKey().once('value', function(snapshot) {
-        snapshot.forEach(addNewMod);
-      });         
-}*/
 
 function writeLogins(p, type ="login") {
     const now = Date.now();

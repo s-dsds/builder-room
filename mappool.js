@@ -128,9 +128,11 @@ async function actualizeMapList() {
         })
         d.sort((a,b) => (a.sort > b.sort) ? -1 : ((b.sort > a.sort) ? 1 : 0)).reverse()
         if (d.length==0) {
+            if (typeof announce == "function") announce("-- error synching map list with gallery --", null, COLORS.ERROR)
             console.log("-- error synching map list with gallery --")
             return
         }
+        if (typeof announce == "function") announce("- map list synched with gallery -", null, COLORS.ANNOUNCE_BRIGHT)
         console.log("- map list synched with gallery -")
         mapList = d;
 }
