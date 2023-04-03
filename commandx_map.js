@@ -5,12 +5,12 @@ COMMAND_REGISTRY.add("fx", ["!fx effect1 effect2: adds fx to the current map, ap
         let big=false;
         fxs = fx.map(
             function(e) {	
-                let trimmed=e.split("#").shift().trim();
+                let trimmed=e.split("#").shift().trim().toLowerCase();
                 if (effectList.indexOf(trimmed) >= 0 && (trimmed!="bigger" || big==false)) { // filtering bigger since it actually breaks when chained
                     if (trimmed == "bigger") {
                         big=true;
                     }
-                    return e;
+                    return e.toLowerCase();
               }
             }
         ).filter(x => x).slice(0, 6);
@@ -25,6 +25,7 @@ COMMAND_REGISTRY.add("fx", ["!fx effect1 effect2: adds fx to the current map, ap
 
 function loadEffects(fxs, data) {
     console.log("loading effects", JSON.stringify(fxs));
+    announce("fx: "+fxs.join(" "), null, COLORS.WARNING, "bold")
     (async () => {
         if (!data) {
             data = getCurrentLevelCopy();
@@ -39,8 +40,7 @@ function loadEffects(fxs, data) {
                 console.log(fx);
                 data = effects[fx](data, ...all);
             }
-            loadLev(data);
-            announce("!fx "+fxs.join(" "), nil, COLORS.WARNING, "bold")
+            loadLev(data);            
         } catch(e) {
             console.log("error while applying effects", e)
         }
